@@ -100,7 +100,7 @@ double spline::forward(double x) {
     if (points.empty() || params.empty()) {
         throw std::runtime_error("No points or parameters defined for spline.");
     }
-    std::cout << x <<"\n";
+    
     // Find the interval that x belongs to
     int i;
     for (i = 1; i < points.size(); i++) {
@@ -143,10 +143,6 @@ double spline::backward(double x, double d_y, double y, double lr) {
     points[i][1] = points[i][1]+lr*d_E; //Adjust y_i based on error grad
     //update spline
     interpolation(); //done still experimental
-    //print poimts after update bc there is no point getter func yet
-    for (int i=0;i<points.size();i++){
-        std::cout<<""<<points[i][0]<<" "<<points[i][1]<<" d_e:"<< d_E +lr<<"\n";
-    }
 
     return d_E; //return error grad for backwards pass into next layer
 }
