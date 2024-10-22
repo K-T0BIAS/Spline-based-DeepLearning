@@ -26,6 +26,24 @@ $$
 ( \text{output size},\text{input size}, 4)
 $$
 
+**Note** that the x values of the points list must be sorted from smallest to biggest.
+
+to fully initialize the spline call:
+```cpp
+Spline_instance->interpolate();
+```
+this, although not always nessecery  will adjust the parameters with respect to the points.
+
+To evaluate the spline at point x do:
+```cpp
+double y = Spline_instance->forward(x)
+```
+**Note** that x must be between 0 and the largest x value in the splines points list. Trying to access x values outside the spline will result in an error.
+
+To perform a backward pass call:
+```cpp
+double loss_grad = spline->backward(...
+```
 
 
 ## License
