@@ -25,3 +25,11 @@ and
 $$
 ( \text{output size},\text{input size}, 4)
 $$
+
+
+
+## License
+
+This project is licensed under the Mozilla Public License 2.0. 
+
+Copyright (c) 2024 Tobias Karusseit. See the [LICENSE](./LICENSE) file for details.
