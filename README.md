@@ -1,5 +1,7 @@
 # About Spline-based-DeepLearning
 
+# attention after last merge initializing methods no longer use factory methods instead they now use constructors the readme will be updated accordingly in the near future
+
 ## goals:
 
 1. create visual representations for neural networks by replacing commonly used fully connected layers with spline based layers.
