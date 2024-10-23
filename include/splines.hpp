@@ -1,5 +1,5 @@
 // spline.h
-#ifndef SPLINE_HPP // Include guard
+#ifndef SPLINE_HPP
 #define SPLINE_HPP
 
 #include <iostream>
@@ -27,18 +27,13 @@ private:
     std::vector<std::vector<double>> params; // n-1 x m
     std::vector<std::vector<double>> points; // n x 2
     
-    /*
-    // Private constructor
-    spline(const std::vector<std::vector<double>>& points_list,const std::vector<std::vector<double>>& params_list) :
-        points(points_list), params(params_list) {}
-    */
+
 public:
     
     spline(const std::vector<std::vector<double>> points_list,const std::vector<std::vector<double>> params_list);
+    //default constructor do not use exept to reserve memory
     spline(){};
-    // Static factory method to create an instance of spline
-    //static std::unique_ptr<spline> create(const std::vector<std::vector<double>>& points_list,const std::vector<std::vector<double>>& params_list);
-    
+
     // Member function for interpolation (assuemes points and params are inittialized)
     void interpolation();
     

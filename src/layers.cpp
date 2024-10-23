@@ -1,71 +1,5 @@
 #include "../include/layers.hpp"
 
-/*
-std::unique_ptr < layer > layer::create(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max) {
-    // Initialize layer instance
-    auto new_l = std::unique_ptr < layer > (new layer(_in_size, _out_size, _detail));
-
-    // Prepare l_splines vector
-    new_l->l_splines.resize(_in_size); // Resize the outer vector
-    for (size_t i = 0; i < _in_size; i++) {
-        new_l->l_splines[i].resize(_out_size); // Resize each inner vector
-    }
-    //create zeroed points vector
-    std::vector < std::vector < double>>points(_detail + 2, std::vector < double > (2));
-    //counter for x coordinate
-    double counter = 0.0;
-    //increment x value based on number of points so that all x are spaced evenly
-    for (int i = 1; i < _detail+1; i++) {
-        counter += max/(_detail+1.0);//increment count
-        points[i][0] = counter;//assign count to x var
-    }
-    //maje sure that last point ist exactly max value
-    points[points.size()-1][0]=max;
-    
-    // Create spline with default points and params
-    for (size_t i = 0; i < _in_size; i++) {
-        for (size_t j = 0; j < _out_size; j++) {
-            // Directly assign the unique_ptr returned by spline::create
-            new_l->l_splines[i][j] = spline::create(
-                points, // points
-                std::vector < std::vector < double>>(_detail + 1, std::vector < double > (4)) // params
-            );
-        }
-    }
-
-    return new_l; // Return the unique_ptr to the new layer
-}
-
-std::unique_ptr < layer > layer::create(std::vector < std::vector < std::vector < std::vector < double>>>> &points_list,
-    std::vector < std::vector < std::vector < std::vector < double>>>> &params_list) {
-    unsigned int _in_size = points_list.size();
-    unsigned int _out_size = points_list[0].size();
-    unsigned int _detail = points_list[0][0].size() - 2; // must be > 0
-
-    // Safety check to ensure points and params have the same first 3 dimensions
-    if (params_list.size() != _in_size || params_list[0].size() != _out_size || params_list[0][0].size() != _detail + 1) {
-        throw std::invalid_argument("points_list and params_list must have matching dimensions.");
-    }
-
-    // Initialize layer instance
-    auto new_l = std::unique_ptr < layer > (new layer(_in_size, _out_size, _detail));
-
-    // create l_splines vector
-    new_l->l_splines.resize(_in_size); // Resize the outer vector
-    for (size_t i = 0; i < _in_size; i++) {
-        new_l->l_splines[i].resize(_out_size); // Resize each inner vector
-    }
-
-    // Create spline with points and params list
-    for (size_t i = 0; i < _in_size; i++) {
-        for (size_t j = 0; j < _out_size; j++) {
-            // Directly assign the unique_ptr returned by spline::create to avoid copy error
-            new_l->l_splines[i][j] = spline::create(points_list[i][j], params_list[i][j]);
-        }
-    }
-    return new_l; // Return the unique_ptr to the new layer
-}
-*/
 
 layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max){
     in_size=_in_size;
@@ -140,7 +74,7 @@ void layer::interpolate_splines() {
 
 std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
     
-    std::cout<<"layer fwd call\n";
+    //std::cout<<"layer fwd call\n";
     // Initialize output with zeros
     std::vector < double > output(out_size, 0.0);
 /*
