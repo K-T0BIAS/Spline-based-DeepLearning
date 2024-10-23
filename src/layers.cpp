@@ -1,10 +1,6 @@
-<<<<<<< HEAD:src/layers.cpp
 #include "../include/layers.hpp"
 
-=======
-#include "layers.hpp"
 /*
->>>>>>> 1f107dc1b263170e729d425c31db2a6e736be720:layers.cpp
 std::unique_ptr < layer > layer::create(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max) {
     // Initialize layer instance
     auto new_l = std::unique_ptr < layer > (new layer(_in_size, _out_size, _detail));
