@@ -1,4 +1,4 @@
-#include "layers.hpp"
+#include "../include/layers.hpp"
 
 std::unique_ptr < layer > layer::create(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max) {
     // Initialize layer instance

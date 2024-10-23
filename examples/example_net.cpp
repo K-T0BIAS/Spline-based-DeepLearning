@@ -1,8 +1,7 @@
-#include <iostream>
 #include <algorithm>
 #include <iomanip>
 #include <numeric> // For std::accumulate
-#include "layers.hpp"
+#include "../include/layers.hpp"
 
 class nn{
     private:

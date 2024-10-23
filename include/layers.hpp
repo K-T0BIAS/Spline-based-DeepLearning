@@ -3,7 +3,7 @@
 
 
 
-#include "smartSplines.hpp"
+#include "splines.hpp"
 
 class layer{
     private:

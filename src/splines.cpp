@@ -1,4 +1,4 @@
-#include "smartSplines.hpp"
+#include "../include/splines.hpp"
 
 
 
