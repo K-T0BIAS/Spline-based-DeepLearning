@@ -1,7 +1,7 @@
 #include "../include/splines.hpp"
 
 
-
+/*
 // inotialize spline instance by calling spline::create(points,parameters)
 std::unique_ptr < spline > spline::create(const std::vector < std::vector < double>> &points_list, const std::vector < std::vector < double>> &params_list) {
     if (points_list.size() < 2) {
@@ -24,10 +24,35 @@ std::unique_ptr < spline > spline::create(const std::vector < std::vector < doub
     }
     return std::unique_ptr < spline > (new spline(points_list, params_list));
 }
+*/
 
+spline::spline(const std::vector < std::vector < double>> points_list, const std::vector < std::vector < double>> params_list){
+    if (points_list.size() < 2) {
+        throw std::runtime_error("to few points in points_list. (Minimum num points == 2)");
+    }
+    if(params_list.size() != points_list.size()-1) {
+        throw std::runtime_error("invalid num of parameter lists. (params_list.size()==points_list.size()-1)");
+    }
+    for (size_t i = 0; i < points_list.size(); i++) {
+        if (points_list[i].size() != 2) {
+            print_err("inconsistent size in points_list dim 1 at index ", i, " size of dim1 must be 2");
+            throw std::runtime_error("invalid points_list dimensions");
+        }
+    }
+    for (size_t i = 0; i < params_list.size()-1; i++) {
+        if (params_list[i].size() != 4) {
+            print_err("inconsistent size of parameters at params_list[", i, "] (mustbbe ==4)");
+            throw std::runtime_error("invalid params_list size");
+        }
+    }
+    params = params_list;
+    points = points_list;
+    
+    std::cout<<"params_list size "<<params.size()<<"\n";
+}
 
 void spline::interpolation() {
-
+    std::cout<<"interpolation call\n";
 
 
     //append temporay param list to store edge values in forward and backward
@@ -77,7 +102,7 @@ void spline::interpolation() {
     }
 
     params.pop_back(); //remove temp placeholders
-/*debug
+/*debug*/
     //to print interpolation result
     for (size_t i = 0; i < params.size(); ++i) {
         for (size_t j = 0; j < params[i].size(); ++j) {
@@ -92,11 +117,11 @@ void spline::interpolation() {
         }
         std::cout << "\n"; // New line after each parameter set
     }
-*/
 
 }
 
 double spline::forward(double x) {
+    std::cout<<"spline fwd call\n";
     if (points.empty() || params.empty()) {
         throw std::runtime_error("No points or parameters defined for spline.");
     }
@@ -120,6 +145,7 @@ double spline::forward(double x) {
 }
 //x =input from forward,y_d output from prev layer or error func,y= expected targed value,lr =learning rate
 double spline::backward(double x, double d_y, double y, double lr) {
+    std::cout<<"backward in spline\n";
     //check for empty points and parameters
     if (points.empty() || params.empty()) {
         throw std::runtime_error("No points or parameters defined for spline.");
@@ -137,9 +163,9 @@ double spline::backward(double x, double d_y, double y, double lr) {
     std::cout<<"\nin spline backwards x="<<x<<" founf point indx:"<<i<<"\n";
 */
     double d_E = (forward(x)-y)+d_y; //respective error of current layer + accumulated grad
-/*debug    
+/*debug  */  
     std::cout<<"dy: "<<d_y<<"D_E in spline="<<d_E<<"\n";
-*/
+
     points[i][1] = points[i][1]+lr*d_E; //Adjust y_i based on error grad
     //update spline
     interpolation(); //done still experimental

@@ -5,29 +5,31 @@
 
 class nn{
     private:
-        std::vector<std::unique_ptr<layer>> layers;
+        
         double loss;
         double loss_grad;
-        nn(double _loss,double _loss_grad):loss(_loss),loss_grad(_loss_grad){};
+        
     public:
-    static std::unique_ptr<nn> create(int num_layers,std::vector<unsigned int> in,std::vector<unsigned int> out,std::vector<unsigned int> detail,std::vector<double> max);
+    std::vector<layer> layers;
+    
+    nn(int num_layers,std::vector<unsigned int> in,std::vector<unsigned int> out,std::vector<unsigned int> detail,std::vector<double> max);
     std::vector<double> forward(std::vector<double> x,bool normalize);
     std::vector<double> backward(std::vector<double> x,std::vector<double> d_y,std::vector<double> y);
         
 };
 
-std::unique_ptr<nn> nn::create(int num_layers,std::vector<unsigned int> in,std::vector<unsigned int> out,std::vector<unsigned int> detail,std::vector<double> max){
+nn::nn(int num_layers,std::vector<unsigned int> in,std::vector<unsigned int> out,std::vector<unsigned int> detail,std::vector<double> max){
+    loss=0.0;
+    loss_grad=0.0;
     //create layer vector to hold futur layers
-    std::vector<std::unique_ptr<layer>> new_layers;
-    //create new network nn
-    std::unique_ptr<nn> new_nn = std::unique_ptr<nn> (new nn(0,0));
+    std::vector<layer> new_layers;
+
     //initthe layers
     for (int i=0;i<num_layers;i++){
-        new_layers.push_back(layer::create(in[i],out[i],detail[i],max[i]));
+        new_layers.push_back(layer(in[i],out[i],detail[i],max[i]));
     }
     //assign laye4s
-    new_nn->layers=std::move(new_layers);//could throw error if so remove the std move call and directly assign new layers
-    return new_nn;
+    layers=new_layers;//could throw error if so remove the std move call and directly assign new layer
 }
 
 std::vector<double> nn::forward(std::vector<double> x,bool normalize){
@@ -36,10 +38,10 @@ std::vector<double> nn::forward(std::vector<double> x,bool normalize){
         
         
         if(i!=layers.size()-1){
-            x=layers[i]->forward(x,normalize);
+            x=layers[i].forward(x,normalize);
         }
         else{
-            x=layers[i]->forward(x,false);
+            x=layers[i].forward(x,false);
         }
         
     }
@@ -50,8 +52,8 @@ std::vector<double> nn::forward(std::vector<double> x,bool normalize){
 std::vector<double> nn::backward(std::vector<double> x,std::vector<double> d_y,std::vector<double> y){
     //call backward for all oayers from last to first
     for (int i=layers.size()-1;i>=0;i--){
-        x=(i>0) ? layers[i-1]->last_output:x;
-        d_y=layers[i]->backward(x, d_y, y);
+        x=(i>0) ? layers[i-1].last_output:x;
+        d_y=layers[i].backward(x, d_y, y);
         
     }
     //return error gradient / loss gradient
@@ -69,7 +71,7 @@ std::vector<double> mse_loss_gradient(const std::vector<double>& pred, const std
 
 int main() {
     //create network
-    auto example_net = nn::create(1, {2}, {2}, {8}, { 1.0});
+    nn example_net = nn(1, {2}, {2}, {8}, { 1.0});
     //num of test samples
     int num_samples = 5;
     //init samples
@@ -86,6 +88,7 @@ int main() {
 
     int num_epochs = 100; // Define number of epochs
     double learning_rate = 1; // Learning rate
+    
 
     for (int epoch = 0; epoch < num_epochs; epoch++) {
         double total_loss = 0.0;
@@ -94,7 +97,7 @@ int main() {
 
         for (int sample = 0; sample < num_samples; sample++) {
             // Forward pass
-            auto pred = example_net->forward(X[sample],true);
+            auto pred = example_net.forward(X[sample],true);
 
             // Print intermediate predictions
             std::cout << "Sample " << sample + 1 << " - Predictions: ";
@@ -115,7 +118,7 @@ int main() {
             std::cout << std::endl;
             
             // Backward pass
-            example_net->backward(X[sample], loss_grad, pred);
+            example_net.backward(X[sample], loss_grad, pred);
 
         }
 
