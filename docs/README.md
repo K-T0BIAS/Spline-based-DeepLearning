@@ -2,6 +2,8 @@
 
 # attention after last merge initializing methods no longer use factory methods instead they now use constructors the readme will be updated accordingly in the near future
 
+# next additions : network.hpp and network.cpp files for easy network creation in the future
+
 ## goals:
 
 1. create visual representations for neural networks by replacing commonly used fully connected layers with spline based layers.
