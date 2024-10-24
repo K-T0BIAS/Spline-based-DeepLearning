@@ -20,17 +20,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Set up CMake
-      - name: Set up CMake
-        uses: cmake/setup-cmake@v1  # Correct action for setting up CMake
-        with:
-          cmake-version: '3.20.2'  # Specify the CMake version you need
+      # Step 2: Install CMake and dependencies
+      - name: Install CMake and g++
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y cmake g++  # Ensure CMake and g++ are installed
 
-      # Step 3: Install dependencies (customize as needed)
-      - name: Install dependencies
-        run: sudo apt-get install -y g++ # CMake is already installed by the previous step
-
-      # Step 4: Build and run tests
+      # Step 3: Build and run tests
       - name: Build and run tests
         run: |
           mkdir build
