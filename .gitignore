@@ -1,0 +1,34 @@
+# Build directory
+/build/
+# CMake files
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+CTestTestfile.cmake
+*.cmake
+
+# Temporary files
+*.o
+*.so
+*.a
+*.exe
+*.out
+*.dSYM/
+*.user
+*.swp
+*.tmp
+
+# IDE specific files (if you're using any IDE)
+# Uncomment for Visual Studio Code
+.vscode/
+# Uncomment for CLion
+.idea/
+# Uncomment for Visual Studio
+.vs/
+
+# Logs and database files
+*.log
+*.sqlite
+
+# Any other custom files that you do not want to track
