@@ -1,0 +1,38 @@
+name: CI - Build and Test
+
+# Trigger the workflow on pushes and pull requests
+on:
+  push:
+    paths:
+      - 'src/**'      # Monitor changes in src directory
+      - 'include/**'  # Monitor changes in include directory
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'include/**'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest  # Use the latest Ubuntu virtual environment
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up CMake (automatically sets up the necessary environment)
+      - name: Set up CMake
+        uses: actions/setup-cmake@v3
+
+      # Step 3: Install dependencies (you can customize this for your project)
+      - name: Install dependencies
+        run: sudo apt-get install -y cmake g++ # Add other dependencies as needed
+
+      # Step 4: Build and run tests
+      - name: Build and run tests
+        run: |
+          mkdir build
+          cd build
+          cmake -DBUILD_TESTING=ON ..
+          make
+          ctest --output-on-failure  # This runs the tests with detailed output if they fail
