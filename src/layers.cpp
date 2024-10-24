@@ -1,5 +1,5 @@
 #include "../include/SplineNetLib/layers.hpp"
-//added this line to test the testss
+//added this line to test the tests
 namespace SplineNetLib {
 
 layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max){
