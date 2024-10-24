@@ -71,12 +71,40 @@ SplineNetLib::layer layer_instance = layer(points,parameters);
 ```
 **assuming namespace std**
 * vector<vector<vector<vector<double>>>> points ({{{{x,y},...},...},...}) = Matrix like (input size • output size • detail + 2 • 2)
-* vector<vector<vector<vector<double>>>> parameters ({{{{0,0,0,0},...},...}....} = Matrix like (input size • output size • detail + 1 • 4)
+* vector<vector<vector<vector<double>>>> parameters ({{{{0,0,0,0},...},...},...} = Matrix like (input size • output size • detail + 1 • 4)
 
 To fully init a layer call:
 ```cpp
 layer_instance.interpolate_splines();
 ```
+**Single layer training:**
+
+- forward pass:
+```cpp
+vector<double> Y = layers_instance.forward(X,normalize);
+```
+* vector<double> X = input vector (with size == layers input size)
+* bool normalize = output normalization (if True output will be between 0 and 1)
+* Y.size()-1 == layer output size
+
+- backward pass:
+```cpp
+vector<double> loss_gradient = layer_instance(X,d_y,y);
+```
+
+* vector<double> X = input (either from previous layer or from dataset)
+* vector<double> d_y = loss_gradient (from next layer or loss function)
+* vector<double> y = layer or model prediction from forward
+* loss_gradient == d_y for the previous layers backward pass
+
+**layer size:**
+
+$$
+\text{layer parameters} = \text{input size} * \text{output size} * (\text{detail} + 2) * 2 + \text{input size} * \text{output size} * (\text{detail} + 1) * 4
+$$
+
+
+
 
 
 
