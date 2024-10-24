@@ -48,4 +48,4 @@ write_basic_package_version_file(
 )
 
 # Install the package configuration file
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SplineNetLibConfigVersion.cmake" DESTINATION lib/cmake/SplineNetLib)
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SplineNetLibConfigVersion.cmake" DESTINATION lib/cmake/SplineNetLib

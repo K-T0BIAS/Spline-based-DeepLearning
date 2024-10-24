@@ -1,5 +1,6 @@
 # Build directory
 /build/
+
 # CMake files
 CMakeCache.txt
 CMakeFiles/
@@ -32,3 +33,10 @@ CTestTestfile.cmake
 *.sqlite
 
 # Any other custom files that you do not want to track
+# Ignore test executables
+/tests/SplineNetLibTests
+# Ignore Catch2 build files (optional)
+third_party/Catch2/build/
+
+# CMake debug files
+CMakeDebug.log
