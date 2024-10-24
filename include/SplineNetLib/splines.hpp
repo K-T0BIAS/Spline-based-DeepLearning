@@ -8,6 +8,8 @@
 #include <stdexcept>
 #include <cmath>
 
+namespace SplineNetLib {
+
 // Function for zero argument error message
 inline void print_err() {
     std::cerr << "\n";
@@ -46,5 +48,7 @@ public:
     
     std::vector<std::vector<double>> get_params();
 };
+
+}//namespace
 
 #endif // SPLINE_HPP

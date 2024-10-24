@@ -1,6 +1,6 @@
-#include "../include/splines.hpp"
+#include "../include/SplineNetLib/splines.hpp"
 
-
+namespace SplineNetLib {
 
 
 spline::spline(const std::vector < std::vector < double>> points_list, const std::vector < std::vector < double>> params_list){
@@ -157,3 +157,5 @@ std::vector<std::vector<double>> spline::get_points(){
 std::vector<std::vector<double>> spline::get_params(){
     return params;
 }
+
+}//namespace

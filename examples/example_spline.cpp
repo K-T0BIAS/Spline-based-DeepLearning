@@ -1,4 +1,6 @@
-#include "../include/splines.hpp"
+#include "../include/SplineNetLib/splines.hpp"
+
+using namespace SplineNetLib;
 
 int main (){
     //create points for spline (must be vector < vector < double >>)

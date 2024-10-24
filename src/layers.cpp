@@ -1,5 +1,6 @@
-#include "../include/layers.hpp"
+#include "../include/SplineNetLib/layers.hpp"
 
+namespace SplineNetLib {
 
 layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max){
     in_size=_in_size;
@@ -158,3 +159,5 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
 
     return out;
 }
+
+}//namespace

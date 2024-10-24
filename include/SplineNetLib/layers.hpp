@@ -1,9 +1,9 @@
 #ifndef LAYERS_HPP
 #define LAYERS_HPP
 
-
-
 #include "splines.hpp"
+
+namespace SplineNetLib {
 
 class layer{
     private:
@@ -30,5 +30,7 @@ class layer{
         //calculate gradient with respect to individual spline than sum up for prev layer->backward (=>d_y or if is last layer d_y=loss gradient)
         std::vector<double> backward(std::vector<double> x,std::vector<double> d_y,std::vector<double> y);
 };
+
+}//namespace
 
 #endif

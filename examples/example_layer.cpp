@@ -1,5 +1,6 @@
-#include "../include/layers.hpp"
+#include "../include/SplineNetLib/layers.hpp"
 
+using namespace SplineNetLib;
 
 //mse loss func tondemonstrate training of singular layer
 std::vector<double> mse_loss_gradient(const std::vector<double>& pred, const std::vector<double>& target) {
