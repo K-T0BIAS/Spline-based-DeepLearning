@@ -101,6 +101,17 @@ $$
 
 ### Network
 
+To create a spline network call
+```cpp
+SplineNetLib::nn network_instance = nn(num_layers,input_sizes,output_sizes,details,max_values)
+```
+**assuming namespace std**
+* int num_layers = number of layers the network is supposed to have
+* vector<unsigned int> input_sizes = input_sizes for the layer at each index (e.g. {2,3} layer 0 takes 2 inputs)
+* vector<unsigned int> output_sizes = output_sizes for each layer
+* vector<double> details = detail for each layer
+* vector<double> max_values = max value for each layer (best to set all layers except last to 1.0 and use activation functions to normalize the output between 0 and 1)
+
 
 
 
