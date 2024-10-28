@@ -131,7 +131,7 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y,y)
 * std::vector<double> d_y = loss_gradient
 * std::vector<double> y = target
 
-(when using the manual approach meaning iterating manually over layers to apply activations than this function might not work [untested])
+(when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell. In the future we hope to include a activation function pointer to take care of handling activations in layers directly)
 
 
 
