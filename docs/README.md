@@ -96,9 +96,10 @@ vector<double> loss_gradient = layer_instance(X,d_y,y);
 **layer size:**
 
 $$
-\text{layer parameters} = \text{input size} * \text{output size} * (\text{detail} + 2) * 2 + \text{input size} * \text{output size} * (\text{detail} + 1) * 4
+\text{layer parameters} = \text{input size} × \text{output size} × (\text{detail} + 2) × 2 + \text{input size} * \text{output size} × (\text{detail} + 1) × 4
 $$
 
+### Network
 
 
 
