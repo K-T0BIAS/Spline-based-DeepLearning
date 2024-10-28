@@ -112,6 +112,36 @@ SplineNetLib::nn network_instance = nn(num_layers,input_sizes,output_sizes,detai
 * vector<double> details = detail for each layer
 * vector<double> max_values = max value for each layer (best to set all layers except last to 1.0 and use activation functions to normalize the output between 0 and 1)
 
+**Training**
+
+- forward pass:
+
+  ```cpp
+  std::vector<double> pred = network_instance.forward(X, normalize)
+  ```
+  * vector<double> X = input
+  * bool normalize = normalize outputs (not recommended better use activation functions and itterate manually over the layers)
+ 
+- backwards pass
+
+```cpp
+std::vector<double> loss_gradient = network_instance.backward(X,d_y,y)
+```
+* std::vector<double> X = forward prediction
+* std::vector<double> d_y = loss_gradient
+* std::vector<double> y = target
+
+(when using the manual approach meaning iterating manually over layers to apply activations than this function might not work [untested])
+
+
+
+
+
+
+ 
+
+
+
 
 
 
