@@ -169,8 +169,13 @@ add_executable(YourProjectDirectory main.cpp)
 target_link_libraries(YourProjectDirectory PRIVATE SplineNetLib)
 ```
  
+or in terminal:
+```txt
+g++ -std=c++17 -I/path_to_include -L/path_to_lib -lSplineNetLib main.cpp -o MyNewProject
+```
+* Replace /path_to_include with the path to the installed include directory.
 
-
+* Replace /path_to_lib with the path where libSplineNetLib.a is located.
 
 
 
