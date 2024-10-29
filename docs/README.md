@@ -142,8 +142,9 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y,y)
 4. cd build
 5. cmake ..
 6. make
+7. make install or make install DESTDIR=/path_to_desired_directory
 
-7. to run the example : ./SplineNetExample
+8. to run the example : ./SplineNetExample
 
 
  
