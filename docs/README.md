@@ -134,8 +134,16 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y,y)
 (when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell. In the future we hope to include a activation function pointer to take care of handling activations in layers directly)
 
 
+## install 
 
+1. git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
+2. cd Spline-based-DeepLearning
+3. mkdir build
+4. cd build
+5. cmake ..
+6. make
 
+7. to run the example : ./SplineNetExample
 
 
  
