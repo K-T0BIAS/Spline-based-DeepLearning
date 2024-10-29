@@ -146,7 +146,28 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y,y)
 
 8. to run the example : ./SplineNetExample
 
+## include
 
+in .cpp:
+```cpp
+#include "SplineNetLib/Network.hpp"
+```
+
+in the projects cmake:
+```txt
+cmake_minimum_required(VERSION 3.10)
+project(YourProjectDirectory)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+
+# Find SplineNetLib package
+find_package(SplineNetLib REQUIRED)
+
+# Add executable and link with SplineNetLib
+add_executable(YourProjectDirectory main.cpp)
+target_link_libraries(YourProjectDirectory PRIVATE SplineNetLib)
+```
  
 
 
