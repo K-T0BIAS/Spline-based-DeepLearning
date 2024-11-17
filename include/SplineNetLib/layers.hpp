@@ -32,11 +32,11 @@ class layer{
         double lr=0.1;//learning_rate
         std::vector<double> last_output;
         //init with input size and target output size aswell as detail and maximum inpjt value
-        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max, base_activation *_activation = nullptr);
+        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max, std::shared_ptr<base_activation>_activation = nullptr);
         //load from existing layer data
         layer(std::vector<std::vector<std::vector<std::vector<double>>>> points_list,
               std::vector<std::vector<std::vector<std::vector<double>>>> params_list,
-              base_activation *_activation = nullptr);
+              std::shared_ptr<base_activation> _activation = nullptr);
         
         //call interpolation on all l_splines
         void interpolate_splines();
