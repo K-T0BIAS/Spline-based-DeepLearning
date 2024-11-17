@@ -12,6 +12,7 @@ class layer{
         unsigned int in_size, out_size, detail; //num input params,num output params, num of points in all layerspecific splines - 2
         
         std::vector<std::vector<spline>> l_splines;
+        std::shared_ptr<void> activation;//new
         
     public:
         

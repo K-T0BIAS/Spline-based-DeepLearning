@@ -2,7 +2,10 @@
 //added this line to test the tests
 namespace SplineNetLib {
 
-layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max){
+template <typename T>//new
+layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max,const T &activation){
+    activation = std::make_shared<T> (activation);//new
+    
     in_size=_in_size;
     out_size=_out_size;
     detail=_detail;
@@ -36,8 +39,11 @@ layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail
     }
 }
 
+template <typename T>//new
 layer::layer(std::vector < std::vector < std::vector < std::vector < double>>>> points_list,
-             std::vector < std::vector < std::vector < std::vector < double>>>> params_list){
+             std::vector < std::vector < std::vector < std::vector < double>>>> params_list,
+             const T &activation){//new
+    activation = std::make_shared<T>(activation);//new
     
     in_size = points_list.size();
     out_size = points_list[0].size();
@@ -119,6 +125,14 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
         }
     }
     last_output=output;
+    //new
+    //check if activation exists and apply activation to all outputs
+    if (activation != nullptr) {
+        for (int i=0; i < out_size; i++) {
+            output[i] = activation->forward(output[i])
+        }
+    }
+    
     return output;
 }
 
@@ -131,7 +145,7 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
     // Compute spline outputs and sum them up like in forward (cant use forward bc i need both outputs)
     for (size_t j = 0; j < out_size; j++) {
         for (size_t i = 0; i < in_size; i++) {
-            spline_outputs[j][i] = l_splines[i][j].forward(x[i]); // Assuming you have a forward function for spline
+            spline_outputs[j][i] = l_splines[i][j].forward(x[i]); 
             total_outputs[j] += spline_outputs[j][i]; // Sum up outputs from splines
         }
     }
@@ -151,8 +165,14 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
 
             // The gradient for this spline is the total gradient scaled by its contribution to the output sum
             double adjusted_gradient = d_y[j] * contribution_ratio;
+            
+            //new
+            // calculate the gradient of the activation and adjust spline gradient based on it
+            if (activation_func_ptr != nullptr) {
+                adjusted_gradient = activation_func_ptr->backward(spline_output, adjusted_gradient);
+            }
 
-            // calculate gradients for the splines and sum them for the ptevious layer->backward pass
+            // calculate gradients for the splines and sum them for the previous layer->backward pass
             out[i] += l_splines[i][j].backward(x[i],adjusted_gradient, spline_output,   lr);//ggf swap s out and adj grad
         }
     }
