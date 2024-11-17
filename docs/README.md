@@ -96,9 +96,86 @@ vector<double> loss_gradient = layer_instance(X,d_y,y);
 **layer size:**
 
 $$
-\text{layer parameters} = \text{input size} * \text{output size} * (\text{detail} + 2) * 2 + \text{input size} * \text{output size} * (\text{detail} + 1) * 4
+\text{layer parameters} = \text{input size} × \text{output size} × (\text{detail} + 2) × 2 + \text{input size} * \text{output size} × (\text{detail} + 1) × 4
 $$
 
+### Network
+
+To create a spline network call
+```cpp
+SplineNetLib::nn network_instance = nn(num_layers,input_sizes,output_sizes,details,max_values)
+```
+**assuming namespace std**
+* int num_layers = number of layers the network is supposed to have
+* vector<unsigned int> input_sizes = input_sizes for the layer at each index (e.g. {2,3} layer 0 takes 2 inputs)
+* vector<unsigned int> output_sizes = output_sizes for each layer
+* vector<double> details = detail for each layer
+* vector<double> max_values = max value for each layer (best to set all layers except last to 1.0 and use activation functions to normalize the output between 0 and 1)
+
+**Training**
+
+- forward pass:
+
+  ```cpp
+  std::vector<double> pred = network_instance.forward(X, normalize)
+  ```
+  * vector<double> X = input
+  * bool normalize = normalize outputs (not recommended better use activation functions and itterate manually over the layers)
+ 
+- backwards pass
+
+```cpp
+std::vector<double> loss_gradient = network_instance.backward(X,d_y,y)
+```
+* std::vector<double> X = forward prediction
+* std::vector<double> d_y = loss_gradient
+* std::vector<double> y = target
+
+(when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell. In the future we hope to include a activation function pointer to take care of handling activations in layers directly)
+
+
+## install 
+
+1. git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
+2. cd Spline-based-DeepLearning
+3. mkdir build
+4. cd build
+5. cmake ..
+6. make
+7. make install or make install DESTDIR=/path_to_desired_directory
+
+8. to run the example : ./SplineNetExample
+
+## include
+
+in .cpp:
+```cpp
+#include "SplineNetLib/Network.hpp"
+```
+
+in the projects cmake:
+```txt
+cmake_minimum_required(VERSION 3.10)
+project(YourProjectDirectory)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+
+# Find SplineNetLib package
+find_package(SplineNetLib REQUIRED)
+
+# Add executable and link with SplineNetLib
+add_executable(YourProjectDirectory main.cpp)
+target_link_libraries(YourProjectDirectory PRIVATE SplineNetLib)
+```
+ 
+or in terminal:
+```txt
+g++ -std=c++17 -I/path_to_include -L/path_to_lib -lSplineNetLib main.cpp -o YourProjectDirectory 
+```
+* Replace /path_to_include with the path to the installed include directory.
+
+* Replace /path_to_lib with the path where libSplineNetLib.a is located.
 
 
 
