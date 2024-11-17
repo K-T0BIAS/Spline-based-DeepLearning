@@ -2,7 +2,7 @@
 //added this line to test the tests
 namespace SplineNetLib {
 
-template <typename T>//new
+template <typename T = int>//new
 layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max,std::shared_ptr<T> _activation) {
     
     activation=_activation;
@@ -39,7 +39,7 @@ layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail
     }
 }
 
-template <typename T>//new
+template <typename T = int>//new
 layer::layer(std::vector < std::vector < std::vector < std::vector < double>>>> points_list,
              std::vector < std::vector < std::vector < std::vector < double>>>> params_list,
              std::shared_ptr<T> _activation){//new
