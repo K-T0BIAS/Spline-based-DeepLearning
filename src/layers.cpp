@@ -128,7 +128,7 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
     //new
     //check if activation exists and apply activation to all outputs
     if (activation != nullptr) {
-        for (int i=0; i < out_size; i++) {
+        for (size_t i=0; i < out_size; i++) {
             output[i] = activation->forward(output[i])
         }
     }
@@ -168,8 +168,8 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
             
             //new
             // calculate the gradient of the activation and adjust spline gradient based on it
-            if (activation_func_ptr != nullptr) {
-                adjusted_gradient = activation_func_ptr->backward(spline_output, adjusted_gradient);
+            if (activation != nullptr) {
+                adjusted_gradient = activation->backward(spline_output, adjusted_gradient);
             }
 
             // calculate gradients for the splines and sum them for the previous layer->backward pass
