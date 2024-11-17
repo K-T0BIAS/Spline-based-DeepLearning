@@ -4,7 +4,7 @@
 #include "splines.hpp"
 
 namespace SplineNetLib {
-//new    
+    
 class base_activation{
     public:
         // Virtual method for the forward pass
@@ -31,10 +31,10 @@ class layer{
         double lr=0.1;//learning_rate
         std::vector<double> last_output;
         //init with input size and target output size aswell as detail and maximum inpjt value
-        template<typename T>
+        template<typename T = int>
         layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max,std::shared_ptr<T> _activation = nullptr);
         //load from existing layer data
-        template<typename T>
+        template<typename T = int>
         layer(std::vector<std::vector<std::vector<std::vector<double>>>> points_list,
               std::vector<std::vector<std::vector<std::vector<double>>>> params_list,
               std::shared_ptr<T> _activation = nullptr);

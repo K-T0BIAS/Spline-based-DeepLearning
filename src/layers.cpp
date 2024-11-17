@@ -2,7 +2,7 @@
 //added this line to test the tests
 namespace SplineNetLib {
 
-template <typename T>//new
+template <typename T = int>//new
 layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max,std::shared_ptr<T> _activation) {
     
     activation=_activation;
@@ -39,7 +39,7 @@ layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail
     }
 }
 
-template <typename T>//new
+template <typename T = int>//new
 layer::layer(std::vector < std::vector < std::vector < std::vector < double>>>> points_list,
              std::vector < std::vector < std::vector < std::vector < double>>>> params_list,
              std::shared_ptr<T> _activation){//new
@@ -127,7 +127,7 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
     last_output=output;
     //new
     //check if activation exists and apply activation to all outputs
-    if (activation) {
+    if (activation != nullptr) {
         for (size_t i=0; i < out_size; i++) {
             output[i] = activation->forward(output[i])
         }
@@ -168,7 +168,7 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
             
             //new
             // calculate the gradient of the activation and adjust spline gradient based on it
-            if (activation) {
+            if (activation != nullptr) {
                 adjusted_gradient = activation->backward(spline_output, adjusted_gradient);
             }
 
