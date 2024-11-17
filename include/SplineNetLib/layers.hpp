@@ -25,7 +25,7 @@ class layer{
         
         std::vector<std::vector<spline>> l_splines;
         std::shared_ptr<base_activation> activation;//new
-        bool 
+        
         
     public:
         
