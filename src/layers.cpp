@@ -3,9 +3,8 @@
 namespace SplineNetLib {
 
 //new
-layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max,std::shared_ptr<base_activation>_activation) {
-    //has_activation = (_activation == nullptr) ? FALSE : TRUE;
-    activation=_activation;
+layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max) {
+
     in_size=_in_size;
     out_size=_out_size;
     detail=_detail;
@@ -41,11 +40,10 @@ layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail
 
 //new
 layer::layer(std::vector < std::vector < std::vector < std::vector < double>>>> points_list,
-             std::vector < std::vector < std::vector < std::vector < double>>>> params_list,
-             std::shared_ptr<base_activation>_activation){//new
+             std::vector < std::vector < std::vector < std::vector < double>>>> params_list
+            ){//new
     
-    //has_activation = (_activation == nullptr) ? FALSE : TRUE;
-    activation=_activation;
+
     in_size = points_list.size();
     out_size = points_list[0].size();
     detail = points_list[0][0].size() - 2; // must be > 0
@@ -128,11 +126,11 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
     last_output=output;
     //new
     //check if activation exists and apply activation to all outputs
-    if (activation) {
+    /*if (activation) {
         for (size_t i=0; i < out_size; i++) {
             output[i] = activation->forward(output[i])
         }
-    }
+    }*/
     
     return output;
 }
@@ -169,9 +167,9 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
             
             //new
             // calculate the gradient of the activation and adjust spline gradient based on it
-            if (activation) {
+            /*if (activation) {
                 adjusted_gradient = activation->backward(spline_output, adjusted_gradient);
-            }
+            }*/
 
             // calculate gradients for the splines and sum them for the previous layer->backward pass
             out[i] += l_splines[i][j].backward(x[i],adjusted_gradient, spline_output,   lr);//ggf swap s out and adj grad

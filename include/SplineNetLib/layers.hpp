@@ -5,17 +5,7 @@
 
 namespace SplineNetLib {
     
-class base_activation{
-    public:
-        // Virtual method for the forward pass
-        virtual std::vector<double> forward(const std::vector<double>& input) const = 0;
-        
-        // Virtual method for the backward pass (gradient calculation)
-        virtual std::vector<double> backward(const std::vector<double>& input, const std::vector<double>& d_output) const = 0;
-        
-        // Virtual destructor
-        virtual ~base_activation() = default;
-};
+
 
 class layer{
     private:
@@ -24,7 +14,7 @@ class layer{
         unsigned int in_size, out_size, detail; //num input params,num output params, num of points in all layerspecific splines - 2
         
         std::vector<std::vector<spline>> l_splines;
-        std::shared_ptr<base_activation> activation;//new
+        
         
         
     public:
@@ -32,11 +22,11 @@ class layer{
         double lr=0.1;//learning_rate
         std::vector<double> last_output;
         //init with input size and target output size aswell as detail and maximum inpjt value
-        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max, std::shared_ptr<base_activation>_activation = nullptr);
+        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max,);
         //load from existing layer data
         layer(std::vector<std::vector<std::vector<std::vector<double>>>> points_list,
               std::vector<std::vector<std::vector<std::vector<double>>>> params_list,
-              std::shared_ptr<base_activation> _activation = nullptr);
+             );
         
         //call interpolation on all l_splines
         void interpolate_splines();
