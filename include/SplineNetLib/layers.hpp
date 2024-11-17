@@ -4,7 +4,7 @@
 #include "splines.hpp"
 
 namespace SplineNetLib {
-
+template<typename T = int>
 class layer{
     private:
         
@@ -12,17 +12,15 @@ class layer{
         unsigned int in_size, out_size, detail; //num input params,num output params, num of points in all layerspecific splines - 2
         
         std::vector<std::vector<spline>> l_splines;
-        std::shared_ptr<void> activation;//new
+        std::shared_ptr<T> activation;//new
         
     public:
         
         double lr=0.1;//learning_rate
         std::vector<double> last_output;
         //init with input size and target output size aswell as detail and maximum inpjt value
-        template<typename T = int>
         layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max,std::shared_ptr<T> _activation = nullptr);
         //load from existing layer data
-        template<typename T = int>
         layer(std::vector<std::vector<std::vector<std::vector<double>>>> points_list,
               std::vector<std::vector<std::vector<std::vector<double>>>> params_list,
               std::shared_ptr<T> _activation = nullptr);
