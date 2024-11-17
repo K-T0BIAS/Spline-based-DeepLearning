@@ -14,7 +14,7 @@ class base_activation{
         virtual std::vector<double> backward(const std::vector<double>& input, const std::vector<double>& d_output) const = 0;
         
         // Virtual destructor
-        virtual ~activation_function() = default;
+        virtual ~base_activation() = default;
 };
 
 class layer{
