@@ -25,19 +25,18 @@ class layer{
         
         std::vector<std::vector<spline>> l_splines;
         std::shared_ptr<base_activation> activation;//new
+        bool 
         
     public:
         
         double lr=0.1;//learning_rate
         std::vector<double> last_output;
         //init with input size and target output size aswell as detail and maximum inpjt value
-        template<typename T = base_activation>
-        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max,std::shared_ptr<T> _activation = nullptr);
+        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max, base_activation *_activation = nullptr);
         //load from existing layer data
-        template<typename T = base_activation>
         layer(std::vector<std::vector<std::vector<std::vector<double>>>> points_list,
               std::vector<std::vector<std::vector<std::vector<double>>>> params_list,
-              std::shared_ptr<T> _activation = nullptr);
+              base_activation *_activation = nullptr);
         
         //call interpolation on all l_splines
         void interpolate_splines();
