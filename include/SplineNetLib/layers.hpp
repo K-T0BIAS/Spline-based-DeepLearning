@@ -20,12 +20,12 @@ class layer{
         std::vector<double> last_output;
         //init with input size and target output size aswell as detail and maximum inpjt value
         template<typename T>
-        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max,const T &activation);
+        layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max,std::shared_ptr<T> _activation = nullptr);
         //load from existing layer data
         template<typename T>
         layer(std::vector<std::vector<std::vector<std::vector<double>>>> points_list,
               std::vector<std::vector<std::vector<std::vector<double>>>> params_list,
-              const T &activation);
+              std::shared_ptr<T> _activation = nullptr);
         
         //call interpolation on all l_splines
         void interpolate_splines();

@@ -3,9 +3,9 @@
 namespace SplineNetLib {
 
 template <typename T>//new
-layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max,const T &activation){
-    activation = std::make_shared<T> (activation);//new
+layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max,std::shared_ptr<T> _activation) {
     
+    activation=_activation;
     in_size=_in_size;
     out_size=_out_size;
     detail=_detail;
@@ -42,9 +42,9 @@ layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail
 template <typename T>//new
 layer::layer(std::vector < std::vector < std::vector < std::vector < double>>>> points_list,
              std::vector < std::vector < std::vector < std::vector < double>>>> params_list,
-             const T &activation){//new
-    activation = std::make_shared<T>(activation);//new
+             std::shared_ptr<T> _activation){//new
     
+    activation=_activation;
     in_size = points_list.size();
     out_size = points_list[0].size();
     detail = points_list[0][0].size() - 2; // must be > 0
