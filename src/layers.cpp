@@ -142,7 +142,7 @@ std::vector<std::vector<double>> layer::forward(const std::vector<std::vector<do
 }
 
 
-std::vector < double > layer::backward(std::vector < double > x, std::vector < double > d_y, std::vector < double > y, bool apply) {
+std::vector < double > layer::backward(std::vector < double > x, std::vector < double > d_y, bool apply) {
 
     std::vector < double > out(in_size, 0.0);
     std::vector < std::vector < double>> spline_outputs(out_size, std::vector < double > (in_size));
@@ -196,7 +196,7 @@ std::vector<double> layer::backward(const std::vector<std::vector<double>> &x,st
     
     
     for (size_t b = 0; b < x.size(); b++) {
-        std::vector<double> temp = this->backward(x[b],d_y, {0}, false); //remove {0} once y was removed from func decleration
+        std::vector<double> temp = this->backward(x[b],d_y, false); //remove {0} once y was removed from func decleration
         for (size_t i = 0; i < temp.size(); i++) {
             out[i] += temp[i];
         }

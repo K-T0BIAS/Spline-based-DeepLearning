@@ -105,7 +105,7 @@ double spline::forward(double x) {
     }
     
     // Find the interval that x belongs to
-    int i;
+    size_t i;
     for (i = 1; i < points.size(); i++) {
         if (x <= points[i][0]) {
             // Use the previous spline segment's params
@@ -136,7 +136,7 @@ double spline::backward(double x, double d_y, double y, double lr) {
     }
     
     //find segment of x
-    int i;
+    size_t i;
     for (i = 1; i < points.size(); i++) {
 
         if (x <= points[i][0]) {
