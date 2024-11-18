@@ -25,7 +25,7 @@ spline::spline(const std::vector < std::vector < double>> points_list, const std
     params = params_list;
     points = points_list;
     
-    grad = std::vector<doubl> (params_list.size(),0.0);//vec of length of num of sub segments in spline
+    grad = std::vector<double> (params_list.size(),0.0);//vec of length of num of sub segments in spline
     //std::cout<<"params_list size "<<params.size()<<"\n";
 }
 
