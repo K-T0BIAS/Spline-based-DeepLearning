@@ -45,7 +45,7 @@ private:
     
     std::vector<double> grad; //gradient where indx i == segment of spline that uses grad[i]
     
-    void apply_grad(double lr);
+    
     
     //std::vector<double> batch_outputs; // shape 1d : (batchsize,) cached ouptus from latest fwd pass for the gradient calculation in backward, index by batch
 
@@ -62,7 +62,8 @@ public:
     
     //takes used x value, next layers loss gradient,target and learning rate,, returns this layers loss gradient
     double backward(double x,double d_y,double y,double lr);
-    //batch backward
+    
+    void apply_grad(double lr);
     
     
     std::vector<std::vector<double>> get_points(); 

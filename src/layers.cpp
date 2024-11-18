@@ -130,7 +130,7 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
 
 std::vector<std::vector<double>> layer::forward(const std::vector<std::vector<double>> &x, bool normalize) {
     // Initialize output with zeros
-    std::vector<std::vector<double>> output(std::vector<double>(out_size, 0.0));
+    std::vector<std::vector<double>> output(x.size(), std::vector<double>(out_size, 0.0));
     
     //call single input method for all batches
     //in future create threads to parallelize this process on multi core cpus
