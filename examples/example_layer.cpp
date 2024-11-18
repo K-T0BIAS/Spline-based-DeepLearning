@@ -39,7 +39,7 @@ int main (){
             //claculate loss gradient for backward pass
             auto loss_grad = mse_loss_gradient(pred, Y);
             //perform backward pass
-            auto layer_loss_grad = layer_A.backward(X,loss_grad,pred);
+            auto layer_loss_grad = layer_A.backward(X,loss_grad);
             
             //print input, pred, target and loss grad 
             std::cout<< "input : "<<X[0]<<","<<X[1]<<" | prediction : "<<pred[0]<<" | target : "<<Y[0]<<" | loss gradient : "<<loss_grad[0]<<"\n";

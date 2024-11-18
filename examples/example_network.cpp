@@ -63,7 +63,7 @@ int main() {
             std::cout << "\n";
             
             // Backward pass with current X inputs
-            example_net.backward(X[sample], loss_grad, pred);
+            example_net.backward(X[sample], loss_grad);
 
         }
 

@@ -33,12 +33,12 @@ std::vector<double> nn::forward(std::vector<double> x,bool normalize){
     return x;
 }
 
-std::vector<double> nn::backward(std::vector<double> x,std::vector<double> d_y,std::vector<double> y){
+std::vector<double> nn::backward(std::vector<double> x,std::vector<double> d_y){
     //call backward for all oayers from last to first
     for (int i=layers.size()-1;i>=0;i--){
         //if layers[i] is not the first layer use the previou layers (layer[i-1]) prediction as x since backward needs the input from the forward pass
         x=(i>0) ? layers[i-1].last_output : x;
-        d_y=layers[i].backward(x, d_y, y);
+        d_y=layers[i].backward(x, d_y);
         
     }
     //return error gradient || loss gradient

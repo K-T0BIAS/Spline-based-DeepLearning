@@ -16,7 +16,7 @@ class nn{
     //forward pass (uses parameters for layer.forward)
     std::vector<double> forward(std::vector<double> x,bool normalize);
     //backward pass (uses parameters for layer.backward)
-    std::vector<double> backward(std::vector<double> x,std::vector<double> d_y,std::vector<double> y);
+    std::vector<double> backward(std::vector<double> x,std::vector<double> d_y);
         
 };
 
