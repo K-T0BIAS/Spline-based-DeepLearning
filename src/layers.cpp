@@ -128,7 +128,7 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
     return output;
 }
 
-std::vector<std::vector<double>> forward(const std::vector<std::vector<double>> &x, bool normalize) {
+std::vector<std::vector<double>> layer::forward(const std::vector<std::vector<double>> &x, bool normalize) {
     // Initialize output with zeros
     std::vector<std::vector<double>> output(std::vector<double>(out_size, 0.0));
     
@@ -189,7 +189,7 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
     return out;
 }
 
-std::vector<double> backward(const std::vector<std::vector<double>> &x,std::vector<double> d_y) {
+std::vector<double> layer::backward(const std::vector<std::vector<double>> &x,std::vector<double> d_y) {
     
     int batch_size = x.size();
     std::vector < double > out(in_size, 0.0);
