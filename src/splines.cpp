@@ -25,6 +25,7 @@ spline::spline(const std::vector < std::vector < double>> points_list, const std
     params = params_list;
     points = points_list;
     
+    grad = std::vector<doubl> (params_list.size(),0.0);//vec of length of num of sub segments in spline
     //std::cout<<"params_list size "<<params.size()<<"\n";
 }
 
@@ -111,6 +112,12 @@ double spline::forward(double x) {
             x = x - points[i - 1][0]; // Adjust x relative to the spline
             // Perform cubic polynomial interpolation using the parameters
             return params[i - 1][0] + params[i - 1][1] * x + params[i - 1][2] * (x * x) + params[i - 1][3] * (x * x * x);
+            //for output caching 
+            /*
+            double out = params[i - 1][0] + params[i - 1][1] * x + params[i - 1][2] * (x * x) + params[i - 1][3] * (x * x * x);
+            batch_outputs.push_back(out);
+            return out;
+            */
             // Found the correct interval
         }
     }
@@ -143,11 +150,23 @@ double spline::backward(double x, double d_y, double y, double lr) {
 /*debug
     std::cout<<"dy: "<<d_y<<"D_E in spline="<<d_E<<"\n";
 */
+    grad[i] += d_E;
+    /*
     points[i][1] = points[i][1]+lr*d_E; //Adjust y_i based on error grad
     //update spline
     interpolation(); //done still experimental
-
+    */
     return d_E; //return error grad for backwards pass into next layer
+}
+
+void spline::apply_grad(double lr) {
+    for (size_t i = 0; i < grad.size(); i++ ) {
+        if (grad[i] != 0.0) {
+            points[i][1] = points[i][1]+lr*grad[i]; //Adjust y_i based on error grad
+            grad[i] = 0.0; //reset grad for next bwd 
+        }
+    }
+    this->interpolation();
 }
 
 std::vector<std::vector<double>> spline::get_points(){

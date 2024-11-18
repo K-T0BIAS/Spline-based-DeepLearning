@@ -1,3 +1,17 @@
+/*
+new:
+batch output cached
+hpp l.37
+cpp l.115-119
+
+new: 
+grad calcupation and apply now sepperate 
+hpp l.42 & 44
+cpp rm l.155-158
+add l.162-170
+todo : rm lr from spline.backward
+---> also in layer cpp added apply call
+*/
 // spline.h
 #ifndef SPLINE_HPP
 #define SPLINE_HPP
@@ -29,6 +43,11 @@ private:
     std::vector<std::vector<double>> params; // n-1 x m
     std::vector<std::vector<double>> points; // n x 2
     
+    std::vector<double> grad; //gradient where indx i == segment of spline that uses grad[i]
+    
+    void apply_grad(double lr);
+    
+    //std::vector<double> batch_outputs; // shape 1d : (batchsize,) cached ouptus from latest fwd pass for the gradient calculation in backward, index by batch
 
 public:
     
@@ -43,6 +62,8 @@ public:
     
     //takes used x value, next layers loss gradient,target and learning rate,, returns this layers loss gradient
     double backward(double x,double d_y,double y,double lr);
+    //batch backward
+    
     
     std::vector<std::vector<double>> get_points(); 
     

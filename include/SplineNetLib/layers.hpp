@@ -32,8 +32,12 @@ class layer{
         void interpolate_splines();
         //calculate n outputs based one m inputs
         std::vector<double> forward(std::vector<double> x,bool normalize);
+        //forward with batches
+        std::vector<std::vector<double>> forward(const std::vector<std::vector<double> &x, bool normalize);
         //calculate gradient with respect to individual spline than sum up for prev layer->backward (=>d_y or if is last layer d_y=loss gradient)
-        std::vector<double> backward(std::vector<double> x,std::vector<double> d_y,std::vector<double> y);
+        std::vector<double> backward(std::vector<double> x,std::vector<double> d_y,std::vector<double> y, bool apply = TRUE);//y might be unused
+        //backward pass for batch inputs
+        std::vector<double> backward(const std::vector<std::vector<double>> &x,std::vector<double> d_y);
 };
 
 }//namespace

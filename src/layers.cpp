@@ -94,11 +94,11 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
     for (size_t i = 0; i < in_size; i++) {
         for (size_t j = 0; j < out_size; j++) {
             // Get the spline value for input x[i]
-            double spline_output = l_splines[i][j].forward(x[i]);
+            double spline_output = l_splines[i][j].forward(x[i]);//in future rested old cached outputs first before fwd pass
 
             // sum the output from this spline into the output vector
             output[j] += spline_output;
-            /*
+/*
             // Debug: Print the output from the current spline
             std::cout << "Spline[" << i << "][" << j << "] output for x[" << i << "]: " << spline_output << std::endl;
 */
@@ -124,18 +124,25 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
         }
     }
     last_output=output;
-    //new
-    //check if activation exists and apply activation to all outputs
-    /*if (activation) {
-        for (size_t i=0; i < out_size; i++) {
-            output[i] = activation->forward(output[i])
-        }
-    }*/
+
+    return output;
+}
+
+std::vector<std::vector<double>> forward(const std::vector<std::vector<double> &x, bool normalize) {
+    // Initialize output with zeros
+    std::vector<std::vector<double>> output(std::vector<double>(out_size, 0.0));
+    
+    //call single input method for all batches
+    //in future create threads to parallelize this process on multi core cpus
+    for (size_t b = 0; b < x.size(); b++) {
+        output[b] = this->forward(x[b],normalize);
+    }
     
     return output;
 }
 
-std::vector < double > layer::backward(std::vector < double > x, std::vector < double > d_y, std::vector < double > y) {
+
+std::vector < double > layer::backward(std::vector < double > x, std::vector < double > d_y, std::vector < double > y, bool apply) {
 
     std::vector < double > out(in_size, 0.0);
     std::vector < std::vector < double>> spline_outputs(out_size, std::vector < double > (in_size));
@@ -173,9 +180,32 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
 
             // calculate gradients for the splines and sum them for the previous layer->backward pass
             out[i] += l_splines[i][j].backward(x[i],adjusted_gradient, spline_output,   lr);//ggf swap s out and adj grad
+            if (apply) {
+                l_splines[i][j].apply_grad(lr);//adjust spline oarams based on grad
+            }
         }
     }
 
+    return out;
+}
+
+std::vector<double> backward(const std::vector<std::vector<double>> &x,std::vector<double> d_y) {
+    
+    batch_size = x.size();
+    std::vector < double > out(in_size, 0.0);
+    for (size_t b = 0; b < x.size(); b++) {
+        out += this->backward(x[i],d_y, {0}, FALSE); //remove {0} once y was removed from func decleration
+    }
+    for (size_t i = 0; i < in_size; i++) {
+        for (size_t j = 0; j < out_size; j++) {
+            l_splines[i][j].apply_grad(lr/batch_size);//adjust spline params based on grad
+        }
+    }
+    //normalize the gradient by the batch size
+    for (size_t i = 0; i < out.size(); i++) {
+        out[i]/=batch_size;
+    }
+    
     return out;
 }
 
