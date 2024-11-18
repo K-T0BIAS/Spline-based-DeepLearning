@@ -1,5 +1,8 @@
 # About Spline-based-DeepLearning
 
+## New:
+batch compatibility for layers 
+
 ## goals:
 
 1. create visual representations for neural networks by replacing commonly used fully connected layers with spline based layers.
@@ -42,11 +45,10 @@ double y = Spline_instance.forward(x)
 
 To perform a backward pass call:
 ```cpp
-double loss_grad = spline.backward(x,d_y,y,lr)
+double loss_grad = spline.backward(x,d_y,lr)
 ```
 * double x = input
 * double d_y = loss Gradient of the next layer
-* double y = target
 * double lr = learning rate
 
 ### layers
@@ -85,12 +87,11 @@ vector<double> Y = layers_instance.forward(X,normalize);
 
 - backward pass:
 ```cpp
-vector<double> loss_gradient = layer_instance(X,d_y,y);
+vector<double> loss_gradient = layer_instance(X,d_y);
 ```
 
 * vector<double> X = input (either from previous layer or from dataset)
 * vector<double> d_y = loss_gradient (from next layer or loss function)
-* vector<double> y = layer or model prediction from forward
 * loss_gradient == d_y for the previous layers backward pass
 
 **layer size:**
@@ -125,11 +126,10 @@ SplineNetLib::nn network_instance = nn(num_layers,input_sizes,output_sizes,detai
 - backwards pass
 
 ```cpp
-std::vector<double> loss_gradient = network_instance.backward(X,d_y,y)
+std::vector<double> loss_gradient = network_instance.backward(X,d_y)
 ```
 * std::vector<double> X = forward prediction
 * std::vector<double> d_y = loss_gradient
-* std::vector<double> y = target
 
 (when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell. In the future we hope to include a activation function pointer to take care of handling activations in layers directly)
 
