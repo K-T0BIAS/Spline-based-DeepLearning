@@ -128,7 +128,7 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
     return output;
 }
 
-std::vector<std::vector<double>> forward(const std::vector<std::vector<double> &x, bool normalize) {
+std::vector<std::vector<double>> forward(const std::vector<std::vector<double>> &x, bool normalize) {
     // Initialize output with zeros
     std::vector<std::vector<double>> output(std::vector<double>(out_size, 0.0));
     
