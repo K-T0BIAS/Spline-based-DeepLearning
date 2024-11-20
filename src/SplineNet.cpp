@@ -8,7 +8,7 @@ nn::nn(int num_layers,std::vector<unsigned int> in,std::vector<unsigned int> out
     std::vector<layer> new_layers;
 
     //init the layers
-    for (size_t i=0;i<num_layers;i++){
+    for (int i=0;i<num_layers;i++){
         new_layers.push_back(layer(in[i],out[i],detail[i],max[i]));//layer constructor 1 without loading old parameters
     }
     //assign layers

@@ -24,7 +24,7 @@ layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail
     //counter for x coordinate
     double counter = 0.0;
     //increment x value based on number of points so that all x are spaced evenly
-    for (int i = 1; i < _detail+1; i++) {
+    for (unsigned int i = 1; i < _detail+1; i++) {
         counter += max/((double)_detail+2.0);//increment count
         points[i][0] = counter;//assign count to x var
     }
@@ -123,7 +123,7 @@ std::vector < double > layer::forward(std::vector < double> x,bool normalize) {
             max=(max<x) ? x:max;
         }
         if (max!=0){
-            for (int i=0;i<output.size();i++){
+            for (size_t i=0;i<output.size();i++){
                 output[i]/=max;
             }
         }
