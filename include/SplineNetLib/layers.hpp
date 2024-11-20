@@ -19,7 +19,7 @@ class layer{
         
     public:
         
-        double lr=0.1;//learning_rate
+        double lr=0.001;//learning_rate
         std::vector<double> last_output;
         //init with input size and target output size aswell as detail and maximum inpjt value
         layer(unsigned int _in_size,unsigned int _out_size,unsigned int _detail,double max);
@@ -37,7 +37,11 @@ class layer{
         //calculate gradient with respect to individual spline than sum up for prev layer->backward (=>d_y or if is last layer d_y=loss gradient)
         std::vector<double> backward(std::vector<double> x,std::vector<double> d_y, bool apply = true);//y might be unused
         //backward pass for batch inputs
-        std::vector<double> backward(const std::vector<std::vector<double>> &x,std::vector<double> d_y);
+        std::vector<std::vector<double>> backward(const std::vector<std::vector<double>> &x,std::vector<std::vector<double>> d_y);
+        
+        std::vector<std::vector<spline>> get_splines() { 
+            return l_splines;
+        }
 };
 
 }//namespace

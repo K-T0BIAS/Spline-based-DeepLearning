@@ -21,6 +21,8 @@ todo : rm lr from spline.backward
 #include <vector>
 #include <stdexcept>
 #include <cmath>
+#include <thread>
+#include <mutex>
 
 namespace SplineNetLib {
 
@@ -36,6 +38,7 @@ void print_err(T first, Args... args) {
     print_err(args...);
 }
 
+extern bool parallel;
 
 
 class spline {

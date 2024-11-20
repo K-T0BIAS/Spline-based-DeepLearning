@@ -1,6 +1,8 @@
 #include "../include/SplineNetLib/splines.hpp"
 
 namespace SplineNetLib {
+    
+bool parallel = false;
 
 
 spline::spline(const std::vector < std::vector < double>> points_list, const std::vector < std::vector < double>> params_list){
