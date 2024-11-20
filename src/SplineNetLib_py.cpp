@@ -1,3 +1,21 @@
+// Copyright (c) <2024>, <Tobias Karusseit>
+// 
+// This file is part of the PySplineNetLib project, which is licensed under the 
+// Mozilla Public License, Version 2.0 (MPL-2.0).
+// 
+// SPDX-License-Identifier: MPL-2.0
+// 
+// This file also includes contributions from the pybind11 library, which is licensed 
+// under the MIT License.
+//
+// SPDX-License-Identifier: MIT
+//
+// For the full text of the licenses, see:
+// - Mozilla Public License 2.0: https://opensource.org/licenses/MPL-2.0
+// - MIT License: https://opensource.org/licenses/MIT
+
+#include <pybind11/pybind11.h>
+
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>  // To handle STL types like std::string, std::vector
 #include "SplineNetLib/SplineNet.hpp"    // Header for the library

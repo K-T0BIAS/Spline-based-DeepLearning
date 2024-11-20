@@ -1,13 +1,18 @@
-/*
-batched backward can not be compressed into normalized gradient must do each batch sepperately
-*/
+// Copyright (c) <2024>, <Tobias Karusseit>
+// 
+// This file is part of the PySplineNetLib project, which is licensed under the 
+// Mozilla Public License, Version 2.0 (MPL-2.0).
+// 
+// SPDX-License-Identifier: MPL-2.0
+// For the full text of the licenses, see:
+// - Mozilla Public License 2.0: https://opensource.org/licenses/MPL-2.0
 
 
 #include "../include/SplineNetLib/layers.hpp"
-//added this line to test the tests
+
 namespace SplineNetLib {
 
-//new
+
 layer::layer(unsigned int _in_size, unsigned int _out_size, unsigned int _detail,double max) {
 
     in_size=_in_size;

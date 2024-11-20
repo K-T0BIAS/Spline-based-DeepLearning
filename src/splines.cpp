@@ -1,3 +1,12 @@
+// Copyright (c) <2024>, <Tobias Karusseit>
+// 
+// This file is part of the PySplineNetLib project, which is licensed under the 
+// Mozilla Public License, Version 2.0 (MPL-2.0).
+// 
+// SPDX-License-Identifier: MPL-2.0
+// For the full text of the licenses, see:
+// - Mozilla Public License 2.0: https://opensource.org/licenses/MPL-2.0
+
 #include "../include/SplineNetLib/splines.hpp"
 
 namespace SplineNetLib {

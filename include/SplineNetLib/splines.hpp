@@ -1,18 +1,14 @@
-/*
-new:
-batch output cached
-hpp l.37
-cpp l.115-119
+// Copyright (c) <2024>, <Tobias Karusseit>
+// 
+// This file is part of the PySplineNetLib project, which is licensed under the 
+// Mozilla Public License, Version 2.0 (MPL-2.0).
+// 
+// SPDX-License-Identifier: MPL-2.0
+// 
+// For the full text of the licenses, see:
+// - Mozilla Public License 2.0: https://opensource.org/licenses/MPL-2.0
 
-new: 
-grad calcupation and apply now sepperate 
-hpp l.42 & 44
-cpp rm l.155-158
-add l.162-170
-todo : rm lr from spline.backward
----> also in layer cpp added apply call
-*/
-// spline.h
+
 #ifndef SPLINE_HPP
 #define SPLINE_HPP
 
