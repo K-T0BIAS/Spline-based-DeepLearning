@@ -3,6 +3,10 @@
 ## New:
 batch compatibility for layers 
 
+**documentation was not yet updated some features might have changed and new features were added**
+
+**updates will follow soon**
+
 ## goals:
 
 1. create visual representations for neural networks by replacing commonly used fully connected layers with spline based layers.
