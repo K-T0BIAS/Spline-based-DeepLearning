@@ -25,7 +25,7 @@ def get_include_path():
 def build_python_extension():
     """ Build the Python extension using setuptools. """
     # Get the relative paths to the library and include directories
-    lib_path = os.path.join(os.path.abspath('build'))  # Assuming library is in 'build/lib'
+    lib_path = os.path.join(os.path.abspath('build') ,'lib')  # Assuming library is in 'build/lib'
     include_path = os.path.abspath('include')  # Assuming headers are in 'include'
 
     setup(
