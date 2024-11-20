@@ -16,7 +16,7 @@ def build_cpp_library():
 
 def get_library_path():
     # Returns the path to the compiled library
-    return os.path.join(os.path.abspath('build'), 'lib')
+    return os.path.join(os.path.abspath('build'))
 
 def get_include_path():
     # Returns the path to the include directory (if needed)
