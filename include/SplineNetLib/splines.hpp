@@ -64,7 +64,7 @@ public:
     double forward(double x);
     
     //takes used x value, next layers loss gradient,target and learning rate,, returns this layers loss gradient
-    double backward(double x,double d_y,double y,double lr);
+    double backward(double x,double d_y,double y);
     
     void apply_grad(double lr);
     

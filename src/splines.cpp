@@ -130,7 +130,7 @@ double spline::forward(double x) {
 
 }
 //x =input from forward,y_d output from prev layer or error func,y= expected targed value,lr =learning rate
-double spline::backward(double x, double d_y, double y, double lr) {
+double spline::backward(double x, double d_y, double y) {
     //std::cout<<"backward in spline\n";
     //check for empty points and parameters
     if (points.empty() || params.empty()) {

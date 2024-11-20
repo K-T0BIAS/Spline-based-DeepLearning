@@ -184,7 +184,7 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
             }*/
 
             // calculate gradients for the splines and sum them for the previous layer->backward pass
-            out[i] += l_splines[i][j].backward(x[i],adjusted_gradient, spline_output,   lr);//ggf swap s out and adj grad
+            out[i] += l_splines[i][j].backward(x[i],adjusted_gradient, spline_output);//ggf swap s out and adj grad
             if (apply) {
                 l_splines[i][j].apply_grad(lr);//adjust spline oarams based on grad
             }
@@ -196,7 +196,7 @@ std::vector < double > layer::backward(std::vector < double > x, std::vector < d
 
 std::vector<std::vector<double>> layer::backward(const std::vector<std::vector<double>> &x,std::vector<std::vector<double>> d_y) {
     
-    int batch_size = x.size();
+    size_t batch_size = x.size();
     std::vector < std::vector <double>> out(x.size(),std::vector<double> (in_size, 0.0));
     
     if (parallel) {
@@ -204,7 +204,7 @@ std::vector<std::vector<double>> layer::backward(const std::vector<std::vector<d
         if (max_threads == 0) max_threads = 2;
         std::vector<std::thread> threads;
         std::mutex out_mutex;
-        int active_threads = 0;
+        unsigned int active_threads = 0;
         
         for (size_t b = 0; b < batch_size; b++) {
             threads.emplace_back([&, b]() {//create thread
