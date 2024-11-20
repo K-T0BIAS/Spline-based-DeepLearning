@@ -202,3 +202,5 @@ g++ -std=c++17 -I/path_to_include -L/path_to_lib -lSplineNetLib main.cpp -o Your
 This project is licensed under the Mozilla Public License 2.0. 
 
 Copyright (c) 2024 Tobias Karusseit. See the [LICENSE](./LICENSE) file for details.
+
+This project also uses `pybind11`, which is licensed under the MIT License. See [pybind11 GitHub](https://github.com/pybind/pybind11) for more details.
