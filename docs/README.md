@@ -138,7 +138,7 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y)
 (when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell. In the future we hope to include a activation function pointer to take care of handling activations in layers directly)
 
 
-## install 
+## install for c++
 
 1. git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
 2. cd Spline-based-DeepLearning
@@ -181,7 +181,19 @@ g++ -std=c++17 -I/path_to_include -L/path_to_lib -lSplineNetLib main.cpp -o Your
 
 * Replace /path_to_lib with the path where libSplineNetLib.a is located.
 
+## install for python
 
+**Note this only includes splines and layer, no Network class**
+
+**REQUIRED: pybind11, setuptools, wheel (if not already install these with pip)**
+
+1. git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
+2. cd Spline-based-DeepLearning
+3. mkdir -p build
+4. cd build
+5. cmake ..
+6. make
+7. pip install .
 
 
 
