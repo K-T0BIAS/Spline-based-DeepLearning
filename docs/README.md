@@ -140,15 +140,16 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y)
 
 ## install for c++
 
-1. git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
-2. cd Spline-based-DeepLearning
-3. mkdir build
-4. cd build
-5. cmake ..
-6. make
-7. make install or make install DESTDIR=/path_to_desired_directory
-
-8. to run the example : ./SplineNetExample
+```txt
+git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
+cd Spline-based-DeepLearning
+mkdir build
+cd build
+cmake ..
+make
+make install or make install DESTDIR=/path_to_desired_directory
+```
+to run the example : ./SplineNetExample
 
 ## include
 
@@ -187,15 +188,16 @@ g++ -std=c++17 -I/path_to_include -L/path_to_lib -lSplineNetLib main.cpp -o Your
 
 **REQUIRED: pybind11, setuptools, wheel (if not already install these with pip)**
 
-1. git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
-2. cd Spline-based-DeepLearning
-3. mkdir -p build
-4. cd build
-5. cmake ..
-6. make
-7. cd ..
-8. pip install .
-
+```txt
+git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
+cd Spline-based-DeepLearning
+mkdir -p build
+cd build
+cmake ..
+make
+cd ..
+pip install .
+```
 
 
 ## License
