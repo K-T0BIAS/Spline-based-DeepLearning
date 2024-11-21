@@ -17,9 +17,10 @@
 #include <vector>
 #include <stdexcept>
 #include <cmath>
+/*
 #include <thread>
 #include <mutex>
-
+*/
 namespace SplineNetLib {
 
 // Function for zero argument error message

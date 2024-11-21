@@ -205,6 +205,8 @@ std::vector<std::vector<double>> layer::backward(const std::vector<std::vector<d
     std::vector < std::vector <double>> out(x.size(),std::vector<double> (in_size, 0.0));
     
     if (parallel) {
+        std::cout << "this function (layer parallel backward) was removed because of faulty behaviour. Please set parallel to false\n";
+/*
         unsigned int max_threads = std::thread::hardware_concurrency();
         if (max_threads == 0) max_threads = 2;
         std::vector<std::thread> threads;
@@ -235,6 +237,7 @@ std::vector<std::vector<double>> layer::backward(const std::vector<std::vector<d
         for (auto &thread : threads) {
             thread.join();
         }
+*/
     }
     else {
         //calculate gradients for all splines over every batch (grad will be accumulated in spline)
