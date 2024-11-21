@@ -193,7 +193,8 @@ g++ -std=c++17 -I/path_to_include -L/path_to_lib -lSplineNetLib main.cpp -o Your
 4. cd build
 5. cmake ..
 6. make
-7. pip install .
+7. cd ..
+8. pip install .
 
 
 
