@@ -4,13 +4,13 @@
 
 [goals](#goals)
 
-[C++ documentation](#C++-Implementation/documentation:)
+[C++ documentation](#C++-Implementation/documentation)
 
 1. [splines](#Splines)
 2. [layers](#layers)
 3. [network](#Network)
 
-[python documentation](#python-Implementation/documentation:)
+[python documentation](#python-Implementation/documentation)
 
 1. [splines](#Splines-2)
 2. [layers](#layer-documentation-comming-soon)
@@ -27,15 +27,15 @@ see [install for python](#install-for-python) to install
 
 **updates will follow soon**
 
-## goals:
+## goals
 
 1. create visual representations for neural networks by replacing commonly used fully connected layers with spline based layers.
 2. achieve similar or better precision to common deep learning approaches whilst keeping the structure as light-wheight and fast as possible.
 3. allow easy adaptability to existing architectures like convolutional and recurrent networks.
 
-## C++ Implementation/documentation:
+## C++ Implementation/documentation
 
-### Splines:
+### Splines
 The splines are the main computation unit of a layer. They allow for an easily adjustable and visualizable alternative to wheight matricies.
 To create a spline call:
 ```cpp
@@ -179,7 +179,7 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y)
 
 (when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell.)
 
-## python Implementation/documentation:
+## python Implementation/documentation
 
 ### import
 
@@ -250,7 +250,7 @@ spline_instance.apply_grad(lr)
 
 lr : float = learning rate (controls how strong the gradient affects the splines points)
 
-### layer decumentation comming soon
+### layer documentation comming soon
 
 
 
