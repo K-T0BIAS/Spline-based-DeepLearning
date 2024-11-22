@@ -12,7 +12,7 @@
 
 [python documentation](#python-Implementationdocumentation)
 
-1. [splines](#splines-2)
+1. [splines](#Splines-2)
 2. [layers](#layer-documentation-comming-soon)
 
 ## New:
