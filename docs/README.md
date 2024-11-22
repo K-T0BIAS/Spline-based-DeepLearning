@@ -4,13 +4,13 @@
 
 [goals](#goals)
 
-[C++ documentation](#C++-Implementation/documentation)
+[C++ documentation](#C++-Implementation/documentation:)
 
 1. [splines](#Splines)
 2. [layers](#layers)
 3. [network](#Network)
 
-[python documentation](#python-Implementation/documentation)
+[python documentation](#python-Implementation/documentation:)
 
 1. [splines](#Splines-2)
 2. [layers](#layer-documentation-comming-soon)
