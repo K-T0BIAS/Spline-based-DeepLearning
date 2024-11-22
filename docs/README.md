@@ -4,7 +4,7 @@
 
 **python version of the spline and layer classes**
 
-see [install for python](#install for python) to install
+see [install for python](#install-for-python) to install
 
 batch compatibility for layers 
 
