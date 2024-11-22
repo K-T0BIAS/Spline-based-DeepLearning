@@ -1,6 +1,11 @@
 # About Spline-based-DeepLearning
 
 ## New:
+
+**python version of the spline and layer classes**
+
+**see [install for python] to install**
+
 batch compatibility for layers 
 
 **documentation was not yet updated some features might have changed and new features were added**
@@ -13,7 +18,7 @@ batch compatibility for layers
 2. achieve similar or better precision to common deep learning approaches whilst keeping the structure as light-wheight and fast as possible.
 3. allow easy adaptability to existing architectures like convolutional and recurrent networks.
 
-## Implementation:
+## C++ Implementation/documentation:
 
 ### Splines:
 The splines are the main computation unit of a layer. They allow for an easily adjustable and visualizable alternative to wheight matricies.
@@ -81,15 +86,28 @@ layer_instance.interpolate_splines();
 ```
 **Single layer training:**
 
-- forward pass:
-```cpp
-vector<double> Y = layers_instance.forward(X,normalize);
-```
-* vector<double> X = input vector (with size == layers input size)
-* bool normalize = output normalization (if True output will be between 0 and 1)
-* Y.size()-1 == layer output size
+- single sample forward pass:
 
-- backward pass:
+**assuming namespace std**
+```cpp
+vector<double> pred = layer_instance.forward(X, normalize);
+```
+* vector<double> X = input vector (with size == layer input size)
+* bool normalize = output normalization (if True output will be between 0 and 1)
+* pred.size() == layer output size
+
+- batched forward pass:
+```cpp
+vector<vector<double>> pred = layer_instance.forward(X, normalize);
+```
+* vector<vector<double>> X = batched input (with size == batch size , layer input size)
+* bool normalize = output normalization (if True output will be between 0 and 1)
+* pred.size() = batch size
+* pred[0].size() = layer output size
+
+- single sample backward pass:
+
+**assuming namespace std**
 ```cpp
 vector<double> loss_gradient = layer_instance(X,d_y);
 ```
@@ -97,6 +115,15 @@ vector<double> loss_gradient = layer_instance(X,d_y);
 * vector<double> X = input (either from previous layer or from dataset)
 * vector<double> d_y = loss_gradient (from next layer or loss function)
 * loss_gradient == d_y for the previous layers backward pass
+
+- batched backward pass:
+```cpp
+vector<vector<double>> loss_gradient = layer_instance(X, d_y);
+```
+
+* vector<vector<double>> X = batched input (either from previous layer or from dataset)
+* vector<vector<double>> d_y = batched loss_gradient (from next layer or from loss function)
+* loss_gradient == d_y for the previous layer backward pass (propagated gradient)
 
 **layer size:**
 
@@ -135,7 +162,81 @@ std::vector<double> loss_gradient = network_instance.backward(X,d_y)
 * std::vector<double> X = forward prediction
 * std::vector<double> d_y = loss_gradient
 
-(when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell. In the future we hope to include a activation function pointer to take care of handling activations in layers directly)
+(when using the manual approach meaning iterating manually over layers to apply activations you have to do the backward pass manually aswell.)
+
+## python Implementation/documentation:
+
+### import
+
+```python
+import PySplineNetLib as some_name
+```
+
+### Splines
+Splines are the main computation unit for this approach, they esentially provide a easily visualizable alterp to wheight matricies
+
+- spline creation:
+```python
+spline_instance = PySplineNetLib.spline(points,parameters)
+```
+* points : list = list of points like (num points, 2)
+* parameters : list = list of parameters like (num points - 1, 4)
+
+**full example**
+
+```python
+points : list = [[0.0,0.0],[0.5,0.25],[1.0,1.0]]
+parameters : list = [[0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0]]
+
+spline_instance = PySplineNetLib.spline(points,parameters)
+```
+
+- spline interpolation:
+
+to properly init a spline call .interpolation()
+
+```python
+spline_instance.interpolation()
+```
+
+this ensures that the parameters are properly set for evaluation and training
+
+- spline forward pass / evaluation:
+
+to evaluate the spline at x call
+
+```python
+y : float = spline_instance.forward(x)
+```
+
+x : float = point to be evaluated
+
+- spline backward / gradient propagation:
+
+to find the splines gradient based on a give loss grad at spline point (x,y) call
+
+```python
+d_y : float = spline_instance.backward(x, d_y, y)
+```
+x : float = point that was last evaluated
+y : float = spline prediction at x
+d_y : float = gradient of loss with (x,target) with respect to spline (x,y) (=> loss.backward() or d_y of next layer)
+
+**Note :**
+
+The gradient of this function call is internally stored in the spline.
+
+- adjust spline based on gradient
+
+to apply the gradient from .backward and adjust the spline call:
+```python
+spline_instance.apply_grad(lr)
+```
+
+lr : float = learning rate (controls how strong the gradient affects the splines points)
+
+### layer decumentation comming soon
+
 
 
 ## install for c++
