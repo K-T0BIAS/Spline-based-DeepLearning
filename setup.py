@@ -24,6 +24,13 @@ import subprocess
 import pybind11
 
 def build_cpp_library():
+    #make sure cmake is installed
+    try:
+        subprocess.check_call(['cmake', '--version'])
+    except FileNotFoundError:
+        print("CMake not found, installing...")
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', 'cmake'])
+        
     # Run CMake to build the C++ library
     if not os.path.exists('build'):
         os.makedirs('build')
