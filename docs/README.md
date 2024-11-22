@@ -1,12 +1,27 @@
 # About Spline-based-DeepLearning
 
+## Table of contents
+
+[goals](#goals)
+
+[C++ documentation](#C++-Implementation/documentation)
+
+1. [splines](#Splines)
+2. [layers](#layers)
+3. [network](#Network)
+
+[python documentation](#python-Implementation/documentation)
+
+1. [splines](#Splines-2)
+2. [layers](#layer-documentation-comming-soon)
+
 ## New:
 
-**python version of the spline and layer classes**
+* python version of the spline and layer classes
 
 see [install for python](#install-for-python) to install
 
-batch compatibility for layers 
+* batch compatibility for layers 
 
 **documentation was not yet updated some features might have changed and new features were added**
 
