@@ -27,6 +27,21 @@ add_library(SplineNetLib
 # Specify the include directories for the library target
 target_include_directories(SplineNetLib PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
+#enable testing
+enable_testing()
+
+#Add test exe
+add_executable(SplineNetTests
+    tests/unit_tests/spline_tests.cpp
+)
+
+#link test exe with library
+target_link_libraries(SplineNetTests PRIVATE SplineNetLib)
+
+#add tests to ctest
+add_test(NAME SplineNetTests COMMAND SplineNetTests)
+
+
 # Add an example or test executable (optional)
 add_executable(SplineNetExample examples/example_network.cpp)
 
@@ -50,9 +65,4 @@ write_basic_package_version_file(
 # Install the package configuration file
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SplineNetLibConfigVersion.cmake" DESTINATION lib/cmake/SplineNetLib)
 
-enable_testing()
 
-add_executable(test tests/unit_tests/spline_tests.cpp)
-target_link_libraries(test SplineNetLib)
-
-add_test(NAME TestA COMMAND test)

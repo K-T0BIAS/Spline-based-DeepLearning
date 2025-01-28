@@ -17,17 +17,13 @@ jobs:
     runs-on: ubuntu-latest  # Use the latest Ubuntu virtual environment
 
     steps:
-      # Step 1: Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      # Step 2: Install CMake and dependencies
-      - name: Install CMake and g++
+      - uses: actions/checkout@v3
+    
+      - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y cmake g++  # Ensure CMake and g++ are installed
+          sudo apt-get install -y cmake build-essential g++
 
-      # Step 3: Build and run tests
       - name: Build and run tests
         run: |
           mkdir build
