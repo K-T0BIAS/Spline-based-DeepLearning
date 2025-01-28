@@ -189,3 +189,5 @@ std::vector<std::vector<double>> spline::get_params(){
 }
 
 }//namespace
+
+//adding this line to force run the new tests without making meaningfull changes to the code (ummay delete this later)

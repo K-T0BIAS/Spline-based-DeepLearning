@@ -7,6 +7,7 @@
 // For the full text of the licenses, see:
 // - Mozilla Public License 2.0: https://opensource.org/licenses/MPL-2.0
 
+//next add auto_grad
 
 #include "../include/SplineNetLib/layers.hpp"
 
