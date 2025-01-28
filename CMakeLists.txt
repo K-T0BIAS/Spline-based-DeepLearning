@@ -7,6 +7,17 @@ project(SplineNetLib VERSION 1.0)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+#include fetch content for catch2
+include(FetchContent)
+
+# fetch catch2 and make usable
+FetchContent_Declare(
+    Catch2
+    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+    GIT_TAG v3.4.0
+)
+FetchContent_MakeAvailable(Catch2)
+
 # Optionally enable warnings for all compilers
 if(MSVC)
     add_compile_options(/W4)
@@ -36,10 +47,14 @@ add_executable(SplineNetTests
 )
 
 #link test exe with library
-target_link_libraries(SplineNetTests PRIVATE SplineNetLib)
+target_link_libraries(SplineNetTests PRIVATE 
+    SplineNetLib
+    Catch2::Catch2WithMain
+)
 
-#add tests to ctest
-add_test(NAME SplineNetTests COMMAND SplineNetTests)
+list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+include(Catch)
+catch_discover_tests(SplineNetTests)
 
 
 # Add an example or test executable (optional)
