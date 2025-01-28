@@ -49,3 +49,10 @@ write_basic_package_version_file(
 
 # Install the package configuration file
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SplineNetLibConfigVersion.cmake" DESTINATION lib/cmake/SplineNetLib)
+
+enable_testing()
+
+add_executable(test tests/unit_tests/spline_tests.cpp)
+target_link_libraries(test SplineNetLib)
+
+add_test(NAME TestA COMMAND test)
