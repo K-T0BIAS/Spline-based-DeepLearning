@@ -2,6 +2,7 @@ name: CI - Build and Test
 
 # Trigger the workflow on pushes and pull requests
 on:
+  workflow_dispatch:
   push:
     paths:
       - 'src/**'      # Monitor changes in src directory
