@@ -77,3 +77,22 @@ TEST_CASE("spline interpolation functions as expected") {
     REQUIRE(spline_parameters == correct_parameters);
 }
 
+TEST_CASE("spline sampling at x functions as expected"){
+    std::vector<std::vector<double>> points = {{0.0,0.0},{0.2,1.0},{0.4,2.0},{0.6,3.0},{0.8,4.0},{1.0,5.0}};
+    std::vector<std::vector<double>> parameters(std::vector<double>(5, std::vector<double>(4, 0.0));
+    
+    spline Test_spline(points,parameters);
+    Test_spline.interpolation();
+    double y_0_0 = Test_spline.forward(0.0);
+    double y_0_25 = Test_spline.forward(0.25);
+    double y_0_5 = Test_spline.forward(0.5);
+    double y_0_75 = Test_spline.forward(0.75);
+    double y_1_0 = Test_spline.forward(1.0);
+    
+    REQUIRE(y_0_0 == Catch::Approx(0.0));
+    REQUIRE(y_0_25 == Catch::Approx(1.25));
+    REQUIRE(y_0_5 == Catch::Approx(2.5));
+    REQUIRE(y_0_75 == Catch::Approx(3.75));
+    REQUIRE(y_1_0 == Catch::Approx(5.0));
+}
+
