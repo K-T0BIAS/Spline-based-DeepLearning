@@ -28,6 +28,6 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake -DBUILD_TESTING=ON ..
+          cmake -DENABLE_TESTS=ON ..
           make
           ctest --output-on-failure  # Runs tests with detailed output if they fail

@@ -38,26 +38,30 @@ add_library(SplineNetLib
 # Specify the include directories for the library target
 target_include_directories(SplineNetLib PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-#enable testing
-enable_testing()
+optional(ENABLE_TESTS "allow catch2 install and tests to run" OFF)
 
-#Add test exe
-add_executable(SplineNetTests
-    tests/unit_tests/spline_tests.cpp
-)
+if(ENABLE_TESTS)
 
-#link test exe with library
-target_link_libraries(SplineNetTests PRIVATE 
-    SplineNetLib
-    Catch2::Catch2WithMain
-)
+    #enable testing
+    enable_testing()
+    
+    #Add test exe
+    add_executable(SplineNetTests
+        tests/unit_tests/spline_tests.cpp
+    )
+    
+    #link test exe with library
+    target_link_libraries(SplineNetTests PRIVATE 
+        SplineNetLib
+        Catch2::Catch2WithMain
+    )
+    
+    list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
+    include(Catch)
+    catch_discover_tests(SplineNetTests)
+ endif()   
 
-list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/extras)
-include(Catch)
-catch_discover_tests(SplineNetTests)
-
-
-# Add an example or test executable (optional)
+# Add an example or test executable 
 add_executable(SplineNetExample examples/example_network.cpp)
 
 # Link the example with the library
