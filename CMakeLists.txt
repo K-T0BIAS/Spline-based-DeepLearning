@@ -38,7 +38,7 @@ add_library(SplineNetLib
 # Specify the include directories for the library target
 target_include_directories(SplineNetLib PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
-optional(ENABLE_TESTS "allow catch2 install and tests to run" OFF)
+option(ENABLE_TESTS "allow catch2 install and tests to run" OFF)
 
 if(ENABLE_TESTS)
 
