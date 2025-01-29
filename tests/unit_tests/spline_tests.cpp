@@ -79,7 +79,7 @@ TEST_CASE("spline interpolation functions as expected") {
 
 TEST_CASE("spline sampling at x functions as expected"){
     std::vector<std::vector<double>> points = {{0.0,0.0},{0.2,1.0},{0.4,2.0},{0.6,3.0},{0.8,4.0},{1.0,5.0}};
-    std::vector<std::vector<double>> parameters(std::vector<double>(5, std::vector<double>(4, 0.0));
+    std::vector<std::vector<double>> parameters(5, std::vector<double>(4, 0.0));
     
     spline Test_spline(points,parameters);
     Test_spline.interpolation();
