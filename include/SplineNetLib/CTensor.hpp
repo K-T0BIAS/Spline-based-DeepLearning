@@ -69,6 +69,11 @@ public:
         _tensor_data = new DTensor(data, shape);
     }
     
+    template<Container U>
+    CTensor(const U& data) {
+        _tensor_data = new DTensor(Flatten<T>(data), get_shape(data));
+    }
+    
     CTensor(const CTensor<T>& other){
         _tensor_data = other._tensor_data;
         _tensor_data->_ref_c++;
