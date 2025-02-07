@@ -17,6 +17,7 @@
 #include <vector>
 #include <stdexcept>
 #include <cmath>
+#include "CTensor.hpp"
 /*
 #include <thread>
 #include <mutex>

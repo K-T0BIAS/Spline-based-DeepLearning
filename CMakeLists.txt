@@ -35,6 +35,13 @@ add_library(SplineNetLib
     src/splines.cpp
 )
 
+# Add the new template-based class headers and implementations
+target_sources(SplineNetLib PRIVATE
+    src/CTensor.tpp
+    src/CTensorFunc.tpp
+    src/CTensorUtils.tpp
+)
+
 # Specify the include directories for the library target
 target_include_directories(SplineNetLib PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
@@ -83,5 +90,11 @@ write_basic_package_version_file(
 
 # Install the package configuration file
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SplineNetLibConfigVersion.cmake" DESTINATION lib/cmake/SplineNetLib)
+
+
+
+
+
+
 
 
