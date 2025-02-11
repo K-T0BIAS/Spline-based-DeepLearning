@@ -62,6 +62,7 @@ def build_python_extension():
                 libraries=["SplineNetLib"],  # Link with your precompiled library
                 library_dirs=[get_library_path()],  # Directory containing the precompiled library
                 language="c++",  # Ensure it's compiled as C++
+                extra_compile_args=["-std=c++20"],
             )
         ],
         install_requires=[

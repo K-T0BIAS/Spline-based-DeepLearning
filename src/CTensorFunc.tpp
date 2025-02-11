@@ -68,34 +68,34 @@ void AddFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) {
     //std::cout<<"debug add bwd grad add\n";
     //ensure self dependend gradients arent added twice
     if (result != this->a.get()) {
-        std::cout<<"debug add bwd this->a gradient propagation initialized\n";
+        //std::cout<<"debug add bwd this->a gradient propagation initialized\n";
         //std::cout<<"debug add bwd this a grad size:"<<this->a->grad().size()<<"prop_grad size: "<<prop_grad.size()<<"\n";
         if (this->a->requires_grad == true) {
             if (this->a->grad().empty()){
-                std::cout<<"a grqd empty "<<this->a->grad().size()<<"\n";
+                //std::cout<<"a grqd empty "<<this->a->grad().size()<<"\n";
                 this->a->zero_grad();
             }
-            std::cout<<"working on grad of a at "<<this->a<<" "<<vectorToString(this->a->grad())<<" "<<vectorToString(prop_grad)<<"\n";
+            //std::cout<<"working on grad of a at "<<this->a<<" "<<vectorToString(this->a->grad())<<" "<<vectorToString(prop_grad)<<"\n";
             for (size_t i = 0; i < prop_grad.size(); i++) {
                 
                 this->a->_tensor_data->_grad[i] += prop_grad[i];
                 //std::cout<<"debug add bwd accumulation step\n";
             }
         }
-        std::cout<<"debug add bwd this a grad accumulated\n";
+        //std::cout<<"debug add bwd this a grad accumulated\n";
         this->a->backward(prop_grad);
-        std::cout<<"debug add bwd this a recursion finished\n";
+        //std::cout<<"debug add bwd this a recursion finished\n";
     }
     //ensure self dependend gradients arent added twice
     if (result != this->b.get()) {
-        std::cout<<"debug add bwd this->b gradient propagation initialized\n";
+        //std::cout<<"debug add bwd this->b gradient propagation initialized\n";
         //std::cout<<"debug add bwd this b grad size:"<<this->b->grad().size()<<"prop_grad size: "<<prop_grad.size()<<"\n";
         if (this->b->requires_grad == true) {
             if (this->b->grad().empty()){
-                std::cout<<"b grqd empty "<<this->b->grad().size()<<"\n";
+                //std::cout<<"b grqd empty "<<this->b->grad().size()<<"\n";
                 this->b->zero_grad();
             }
-            std::cout<<"working on grad of b at "<<this->b<<" "<<vectorToString(this->b->grad())<<" "<<vectorToString(prop_grad)<<"\n";
+            //std::cout<<"working on grad of b at "<<this->b<<" "<<vectorToString(this->b->grad())<<" "<<vectorToString(prop_grad)<<"\n";
             for (size_t i = 0; i < prop_grad.size(); i++) {
                 
                 this->b->_tensor_data->_grad[i] += prop_grad[i];
@@ -156,7 +156,7 @@ void SubFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) {
     if (result != this->a.get()) {
         if (this->a->requires_grad == true) {
             if (this->a->grad().empty()){
-                std::cout<<"a grqd empty "<<this->a->grad().size()<<"\n";
+                //std::cout<<"a grqd empty "<<this->a->grad().size()<<"\n";
                 this->a->zero_grad();
             }
             for (size_t i = 0; i < prop_grad.size(); i++) {
@@ -171,7 +171,7 @@ void SubFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) {
     if (result != this->b.get()) {
         if (this->b->requires_grad == true) {
             if (this->b->grad().empty()){
-                std::cout<<"b grqd empty "<<this->b->grad().size()<<"\n";
+                //std::cout<<"b grqd empty "<<this->b->grad().size()<<"\n";
                 this->b->zero_grad();
             }
             for (size_t i = 0; i < prop_grad.size(); i++) {
@@ -238,7 +238,7 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
 
     
     auto prop_grad_shape = result->shape();
-    std::cout<<"matmul bwd prop shape : "<<vectorToString(prop_grad_shape)<<"\n";
+    //std::cout<<"matmul bwd prop shape : "<<vectorToString(prop_grad_shape)<<"\n";
     
         //this is wrong for matmul if is empty return opasite operant (for a grad is b and reversed)
     if (prop_grad.empty()){
@@ -252,7 +252,7 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
         auto prop_grad_a = this->a->grad(); //needs to be deeply checked
         if (this->a->requires_grad == true) {
             if (this->a->_tensor_data->_grad.empty()){
-                std::cout<<"a grqd empty "<<this->a->grad().size()<<"\n";
+                //std::cout<<"a grqd empty "<<this->a->grad().size()<<"\n";
                 this->a->zero_grad();
             }
                     //create a copy of b and transpose it
@@ -274,13 +274,13 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
         auto prop_grad_b = this->b->grad();
         if (this->b->requires_grad == true) {
             if (this->b->_tensor_data->_grad.empty()){
-                std::cout<<"b grad empty "<<this->b->grad().size()<<"\n";
+                //std::cout<<"b grad empty "<<this->b->grad().size()<<"\n";
                 this->b->zero_grad();
             }
                     //create a copy of b and transpose it
             auto a_copy = *(this->a);
             a_copy.transpose();
-            std::cout<<"b bwd a_copy shape :"<<vectorToString(a_copy.shape())<<" "<<vectorToString(prop_grad)<<"\n";
+            //std::cout<<"b bwd a_copy shape :"<<vectorToString(a_copy.shape())<<" "<<vectorToString(prop_grad)<<"\n";
             prop_grad_b = matmul(a_copy.data(), prop_grad, a_copy.shape(), prop_grad_shape);
             
             //assign grad

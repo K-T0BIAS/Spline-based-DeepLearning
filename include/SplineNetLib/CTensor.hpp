@@ -98,20 +98,22 @@ public:
     
     //-----shape-utils-----
     
-    void squeeze(const size_t &dim) ;
+    void squeeze(const size_t &dim) ;//squeezes / removes the input dim and changes the internal projection shape
     
-    void unsqueeze(const size_t &dim) ;
+    void unsqueeze(const size_t &dim) ; //adds a new dim at the input dim
     
-    void expand(const size_t &dim, const size_t &factor) ;
+    void expand(const size_t &dim, const size_t &factor) ; //expands the dimension by factor so that shape 3,2 expanded(1,3) 
+                                                           //becomes: (3,6) (will duplicate values at the dimension to match new projected shape)
     
-    void permute(const std::vector<size_t> &permutation_indecies) ;
+    void permute(const std::vector<size_t> &permutation_indecies) ; //will swap dimesnions at the permutation indecies 
+                                                                    //shape (2,3,4) permute(2,0,1) becomes: (4,2,3) 
     
     void transpose() ;
     
     //-----auto_grad-----
-    
+    //delete all grad fns of this 
     void clear_history() ;
-    
+    //recursive delete of grad fns for all tensors in the graph with this as root
     void clear_graph() ;
     //maybe add overload o this so that f no arg was passed propagated grad is set to {}, than this function below could use all by ref
     void backward(std::vector<T> prop_grad = {}) ;
