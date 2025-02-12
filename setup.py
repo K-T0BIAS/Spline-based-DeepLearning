@@ -22,6 +22,7 @@ from setuptools import setup, Extension
 import os
 import subprocess
 import pybind11
+import sys
 
 def build_cpp_library():
     #make sure cmake is installed
