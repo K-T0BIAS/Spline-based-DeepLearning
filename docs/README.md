@@ -206,6 +206,12 @@ parameters : list = [[0.0,0.0,0.0,0.0],[0.0,0.0,0.0,0.0]]
 spline_instance = PySplineNetLib.spline(points,parameters)
 ```
 
+or alternatively do:
+
+```python
+spline_instance = PySplineNetLib.spline([[0.0,0.0],[0.5,0.25],[1.0,1.0]],[[0.0]*4]*2)
+```
+
 - spline interpolation:
 
 to properly init a spline call .interpolation()
@@ -234,7 +240,9 @@ to find the splines gradient based on a give loss grad at spline point (x,y) cal
 d_y : float = spline_instance.backward(x, d_y, y)
 ```
 x : float = point that was last evaluated
-y : float = spline prediction at x
+
+y : float = actual target 
+
 d_y : float = gradient of loss with (x,target) with respect to spline (x,y) (=> loss.backward() or d_y of next layer)
 
 **Note :**
@@ -252,7 +260,12 @@ lr : float = learning rate (controls how strong the gradient affects the splines
 
 ### layer documentation comming soon
 
+layers combine multiple splines to map an input vector of size m to an output vector of size n by evaluating splines at the input values and combining these outputs into the output. To achieve this the layer uses an m x n spline matrix where for every input<sub>i</sub> there exist m splines. 
+For example, given a layer with input size 3 and output size 2 a 3 by 2 matrix of splines is created. Now input<sub>i</sub> is given to the spline vector<sub>i</sub> so that all splines<sub>j</sub> get evaluated. the results of spline<sub>i,j</sub> is added to output<sub>j</sub>.
 
+mathematically the output is defined like this:
+
+<img src="https://latex.codecogs.com/png.latex?\dpi{120} y_j = \sum_{i=1}^{m} S_{i,j}(x_i), \quad \forall j \in \{1, \dots, n\}" />
 
 ## install for c++
 
@@ -307,11 +320,6 @@ g++ -std=c++17 -I/path_to_include -L/path_to_lib -lSplineNetLib main.cpp -o Your
 ```txt
 git clone https://github.com/K-T0BIAS/Spline-based-DeepLearning.git
 cd Spline-based-DeepLearning
-mkdir -p build
-cd build
-cmake ..
-make
-cd ..
 pip install .
 ```
 
