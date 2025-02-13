@@ -265,7 +265,9 @@ For example, given a layer with input size 3 and output size 2 a 3 by 2 matrix o
 
 mathematically the output is defined like this:
 
-<img src="https://latex.codecogs.com/png.latex?\dpi{120} y_j = \sum_{i=1}^{m} S_{i,j}(x_i), \quad \forall j \in \{1, \dots, n\}" />
+$$
+y_j = \sum_{i=1}^{m} S_{i,j}(x_i), \quad \forall j \in \{1, \dots, n\}
+$$
 
 ## install for c++
 
