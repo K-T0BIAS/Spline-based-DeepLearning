@@ -36,6 +36,13 @@ public:
     DTensor(const std::initializer_list<T>& data, const std::initializer_list<size_t>& shape) : 
     _data(data), _shape(shape), _ref_c(1) {}
     
+    DTensor(const DTensor<T>& other) : _data(other._data), _shape(other._shape), _grad(other._grad), _ref_c(1) {
+        // Deep copy unique_ptrs to grad fns by calling clone()
+        for (const auto& fn : other._grad_fn) {
+            _grad_fn.push_back(fn ? fn->clone() : nullptr);
+        }
+    }
+    
     void add_ref(){
         _ref_c++;
     }
@@ -53,7 +60,7 @@ template<Scalar T>
 class CTensor { 
 private:
     
-    
+    CTensor(DTensor<T>* _t_data) : _tensor_data(_t_data){}
     
 public:
 
@@ -80,6 +87,8 @@ public:
     }
     
     
+    
+    
     ~CTensor(){
         _tensor_data->rmf_ref();
     }
@@ -95,6 +104,8 @@ public:
     std::vector<std::unique_ptr<Function<T>>> grad_fn() const { return this->_tensor_data->grad_fn; }
     
     void zero_grad();
+    
+    CTensor<T> clone();
     
     //-----shape-utils-----
     

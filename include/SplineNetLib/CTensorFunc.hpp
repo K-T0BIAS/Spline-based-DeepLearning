@@ -38,6 +38,8 @@ public:
     
     virtual void backward(std::vector<T> &prop_grad, CTensor<T> *result) = 0;
     
+    virtual std::unique_ptr<Function<T>> clone() const = 0;
+    
     static std::unordered_set<Function<T>*> global_chain;
     
     void clear_graph_f();
@@ -59,6 +61,8 @@ public:
     std::vector<T> fwd() override ;
     
     void backward(std::vector<T> &prop_grad, CTensor<T> *result) override;
+    
+    virtual std::unique_ptr<Function<T>> clone() const override;
 };
 
 //subtractor function class for CTensor<T>::operator-
@@ -74,6 +78,8 @@ public:
     
     void backward(std::vector<T> &prop_grad, CTensor<T> *result) override;
     
+    virtual std::unique_ptr<Function<T>> clone() const override;
+    
 };
 
 //matrix multiplication function class for CTensor<T>::operator*
@@ -88,6 +94,8 @@ public:
     std::vector<T> fwd() override;
     
     void backward(std::vector<T> &prop_grad, CTensor<T> *result) override;
+    
+    virtual std::unique_ptr<Function<T>> clone() const override;
 };
 
 } //namepace

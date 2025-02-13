@@ -264,6 +264,12 @@ void CTensor<T>::backward(std::vector<T> prop_grad) {
     }
     //std::cout<<"debug Ct bwd fn all bwd finish\n";
 }
+
+template<Scalar T>
+CTensor<T> CTensor<T>::clone() {
+    CTensor<T> Cloned_CTensor(new DTensor<T>(*_tensor_data));
+    return Cloned_CTensor;
+}
 /* untestee
 template<Scalar T>
 CTensor<T> zeros(std::vector<size_t> shape) {

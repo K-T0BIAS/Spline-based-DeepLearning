@@ -112,6 +112,12 @@ void AddFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) {
     //std::cout<<"debug add bwd chain erase\n";
 }
 
+template<typename T>
+requires Scalar<T>
+std::unique_ptr<Function<T>> AddFunction<T>::clone() const {
+    return std::make_unique<AddFunction<T>>(*this);
+}
+
 
 template<typename T>
 requires Scalar<T>
@@ -187,6 +193,12 @@ void SubFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) {
 
 template<typename T>
 requires Scalar<T>
+std::unique_ptr<Function<T>> SubFunction<T>::clone() const {
+    return std::make_unique<SubFunction<T>>(*this);
+}
+
+template<typename T>
+requires Scalar<T>
 std::vector<T> MatMulFunction<T>::fwd() {
     
     std::vector<size_t> a_shape = this->a->shape();
@@ -195,8 +207,8 @@ std::vector<T> MatMulFunction<T>::fwd() {
     size_t a_n_dims = a_shape.size();
     size_t b_n_dims = b_shape.size();
     
-    auto a_copy = *(this->a);
-    auto b_copy = *(this->b);
+    auto a_copy = this->a->clone();
+    auto b_copy = this->b->clone();
         
     if (a_n_dims != b_n_dims) {
         throw std::invalid_argument("operator (*) expects both opperants to have the same num of dimensions but got:"+std::to_string(a_n_dims)+"and "+std::to_string(b_n_dims)+",please ensure opperants dims match by using squeeze or unsqueeze beforehand\n");
@@ -256,7 +268,7 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
                 this->a->zero_grad();
             }
                     //create a copy of b and transpose it
-            auto b_copy = *(this->b);
+            auto b_copy = this->b->clone();
             b_copy.transpose();
             
             prop_grad_a = matmul(prop_grad, b_copy.data(), prop_grad_shape, b_copy.shape());
@@ -278,7 +290,7 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
                 this->b->zero_grad();
             }
                     //create a copy of b and transpose it
-            auto a_copy = *(this->a);
+            auto a_copy = this->a->clone();
             a_copy.transpose();
             //std::cout<<"b bwd a_copy shape :"<<vectorToString(a_copy.shape())<<" "<<vectorToString(prop_grad)<<"\n";
             prop_grad_b = matmul(a_copy.data(), prop_grad, a_copy.shape(), prop_grad_shape);
@@ -293,6 +305,12 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
     
     //remove this func from the chain if all its recursive processes finished
     Function<T>::global_chain.erase(this);
+}
+
+template<typename T>
+requires Scalar<T>
+std::unique_ptr<Function<T>> MatMulFunction<T>::clone() const {
+    return std::make_unique<MatMulFunction<T>>(*this);
 }
 
 }//namespace
