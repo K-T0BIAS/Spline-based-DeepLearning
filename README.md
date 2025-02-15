@@ -17,6 +17,10 @@ see [install for python](#install-for-python) to install
 
 * batch compatibility for layers 
 
+* CTensor class (tensor class with automatic computation graph and gradient propagation)
+
+* python version for CTensor
+
 **documentation was not yet updated some features might have changed and new features were added**
 
 **updates will follow soon**

@@ -72,6 +72,7 @@ public:
         _tensor_data = new DTensor(init, shape);
     }
     
+    
     CTensor(const std::vector<T>& data, const std::vector<size_t>& shape) {
         _tensor_data = new DTensor(data, shape);
     }

@@ -1,4 +1,4 @@
-### splines
+### CPP Splines Documentation
 
 The splines are the main computation unit of a layer. They allow for an easily adjustable and visualizable alternative to wheight matricies.
 To create a spline call:

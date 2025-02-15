@@ -1,5 +1,5 @@
 
-## python Implementation/documentation
+## python Spline Implementation/documentation
 
 ### import
 
