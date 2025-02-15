@@ -1,5 +1,6 @@
-Metadata-Version: 2.1
+Metadata-Version: 2.2
 Name: PySplineNetLib
 Version: 0.1
 License-File: LICENSE
 Requires-Dist: pybind11>=2.6.0
+Dynamic: requires-dist
