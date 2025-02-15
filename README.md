@@ -6,6 +6,8 @@
 
 [C++ spline documentation](docs/cpp_splines.md)
 
+[C++ CTensor documentation](docs/cpp_CTensor.md)
+
 [python spline documentation](docs/py_splines.md)
 
 
