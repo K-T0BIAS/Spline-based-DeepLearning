@@ -1,9 +1,0 @@
-LICENSE
-pyproject.toml
-setup.py
-PySplineNetLib.egg-info/PKG-INFO
-PySplineNetLib.egg-info/SOURCES.txt
-PySplineNetLib.egg-info/dependency_links.txt
-PySplineNetLib.egg-info/requires.txt
-PySplineNetLib.egg-info/top_level.txt
-src/SplineNetLib_py.cpp
