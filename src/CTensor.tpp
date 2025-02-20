@@ -152,6 +152,12 @@ void CTensor<T>::reduce(const size_t &dim, const size_t &factor) {
     }
 
     (*shape)[dim] /= factor;
+    
+    if (this->requires_grad) {
+        auto new_fn = std::make_unique<ReShapeFunction<T>>(std::make_shared<CTensor<T>>(*this), RESHAPE_REDUCE);
+        
+        this->_tensor_data->_grad_fn.push_back(std::move(new_fn));
+    }
 }
 
 template<Scalar T>
@@ -162,6 +168,12 @@ void CTensor<T>::permute(const std::vector<size_t> &permutation_indecies) {
     auto shape_copy = this->shape();
     for (size_t i = 0; i < permutation_indecies.size(); i++) {
         this->_tensor_data->_shape[i] = shape_copy[permutation_indecies[i]];
+    }
+    
+    if (this->requires_grad) {
+        auto new_fn = std::make_unique<ReShapeFunction<T>>(std::make_shared<CTensor<T>>(*this), RESHAPE_PERMUTE);
+        
+        this->_tensor_data->_grad_fn.push_back(std::move(new_fn));
     }
 }
 
@@ -178,6 +190,11 @@ void CTensor<T>::transpose() {
             
         this->permute(transpose_idx);
     } 
+    if (this->requires_grad) {
+        auto new_fn = std::make_unique<ReShapeFunction<T>>(std::make_shared<CTensor<T>>(*this), RESHAPE_TRANSPOSE);
+        
+        this->_tensor_data->_grad_fn.push_back(std::move(new_fn));
+    }
 }
 
 
