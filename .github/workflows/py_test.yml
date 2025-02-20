@@ -31,4 +31,4 @@ jobs:
 
       - name: Run Python unit tests
         run: |
-          python -m unittest discover -s tests -p '*_test.py'  # Discover and run all unittests in the 'tests' folder
+          python ../tests/unit_tests/py_spline_tests.py
