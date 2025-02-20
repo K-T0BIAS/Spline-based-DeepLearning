@@ -4,19 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 project(SplineNetLib VERSION 1.0)
 
 # Set the C++ standard
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-#include fetch content for catch2
-include(FetchContent)
-
-# fetch catch2 and make usable
-FetchContent_Declare(
-    Catch2
-    GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-    GIT_TAG v3.4.0
-)
-FetchContent_MakeAvailable(Catch2)
 
 # Optionally enable warnings for all compilers
 if(MSVC)
@@ -35,12 +24,29 @@ add_library(SplineNetLib
     src/splines.cpp
 )
 
+# Add the new template-based class headers and implementations
+target_sources(SplineNetLib PRIVATE
+    src/CTensor.tpp
+    src/CTensorFunc.tpp
+    src/CTensorUtils.tpp
+)
+
 # Specify the include directories for the library target
 target_include_directories(SplineNetLib PUBLIC ${PROJECT_SOURCE_DIR}/include)
 
 option(ENABLE_TESTS "allow catch2 install and tests to run" OFF)
 
 if(ENABLE_TESTS)
+    #include fetch content for catch2
+    include(FetchContent)
+    
+    # fetch catch2 and make usable
+    FetchContent_Declare(
+        Catch2
+        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
+        GIT_TAG v3.4.0
+    )
+    FetchContent_MakeAvailable(Catch2)
 
     #enable testing
     enable_testing()
@@ -67,6 +73,12 @@ add_executable(SplineNetExample examples/example_network.cpp)
 # Link the example with the library
 target_link_libraries(SplineNetExample PRIVATE SplineNetLib)
 
+# Add an example or test executable 
+add_executable(SplineNetExampleTensor examples/example_CTensor.cpp)
+
+# Link the example with the library
+target_link_libraries(SplineNetExampleTensor PRIVATE SplineNetLib)
+
 # Optional: Install the library and headers
 install(TARGETS SplineNetLib DESTINATION lib)
 install(DIRECTORY include/SplineNetLib DESTINATION include)
@@ -83,5 +95,11 @@ write_basic_package_version_file(
 
 # Install the package configuration file
 install(FILES "${CMAKE_CURRENT_BINARY_DIR}/SplineNetLibConfigVersion.cmake" DESTINATION lib/cmake/SplineNetLib)
+
+
+
+
+
+
 
 

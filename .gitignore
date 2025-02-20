@@ -19,6 +19,7 @@ CTestTestfile.cmake
 *.user
 *.swp
 *.tmp
+*.egg-info
 
 # IDE specific files (if you're using any IDE)
 # Uncomment for Visual Studio Code
