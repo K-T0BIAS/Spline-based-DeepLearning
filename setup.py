@@ -54,7 +54,7 @@ def build_python_extension():
     # Build the Python extension using setuptools
     setup(
         name="PySplineNetLib",  # Name of the generated Python extension module
-        version="0.1",
+        version="0.2",
         ext_modules=[
             Extension(
                 "PySplineNetLib",  # Name of the generated Python extension module

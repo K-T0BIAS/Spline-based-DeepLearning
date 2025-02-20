@@ -14,6 +14,8 @@ else()
     add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 # Add the include directory so other projects can use headers
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
