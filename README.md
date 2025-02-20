@@ -1,5 +1,9 @@
 # About Spline-based-DeepLearning
 
+## bugs
+
+* reshaping a CTensor after performing operations on it may break the gradient calculation!
+
 ## Table of contents
 
 [goals](#goals)

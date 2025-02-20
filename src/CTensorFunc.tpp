@@ -252,7 +252,7 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
     auto prop_grad_shape = result->shape();
     //std::cout<<"matmul bwd prop shape : "<<vectorToString(prop_grad_shape)<<"\n";
     
-        //this is wrong for matmul if is empty return opasite operant (for a grad is b and reversed)
+
     if (prop_grad.empty()){
         for (size_t i=0; i < result->data().size(); i++) {
             prop_grad.push_back(1);
@@ -270,8 +270,9 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
                     //create a copy of b and transpose it
             auto b_copy = this->b->clone();
             b_copy.transpose();
+            auto b_shape = transpose_shape(this->b_shape);
             
-            prop_grad_a = matmul(prop_grad, b_copy.data(), prop_grad_shape, b_copy.shape());
+            prop_grad_a = matmul(prop_grad, b_copy.data(), prop_grad_shape, b_shape);
             
             //assign grad
             for (size_t i = 0; i < prop_grad_a.size(); i++) {
@@ -292,8 +293,9 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
                     //create a copy of b and transpose it
             auto a_copy = this->a->clone();
             a_copy.transpose();
+            auto a_shape = transpose_shape(this->a_shape);
             //std::cout<<"b bwd a_copy shape :"<<vectorToString(a_copy.shape())<<" "<<vectorToString(prop_grad)<<"\n";
-            prop_grad_b = matmul(a_copy.data(), prop_grad, a_copy.shape(), prop_grad_shape);
+            prop_grad_b = matmul(a_copy.data(), prop_grad, a_shape, prop_grad_shape);
             
             //assign grad
             for (size_t i = 0; i < prop_grad_b.size(); i++) {
@@ -311,6 +313,54 @@ template<typename T>
 requires Scalar<T>
 std::unique_ptr<Function<T>> MatMulFunction<T>::clone() const {
     return std::make_unique<MatMulFunction<T>>(*this);
+}
+
+template<typename T>
+requires Scalar<T>
+std::vector<T> ReShapeFunction<T>::fwd() {
+    return this->a->data();
+}
+
+
+template<typename T>
+requires Scalar<T>
+void ReShapeFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result){
+    //std::cout<<"RESHAPEFUNCTION CALL\n";
+    
+    switch(this->operation) {
+        case RESHAPE_SQUEEZE:
+            if (result != this->a.get()){
+                this->a->backward(prop_grad);
+            }
+            break;
+        case RESHAPE_UNSQUEEZE:
+            if (result != this->a.get()){
+                this->a->backward(prop_grad);
+            }
+            break;
+        case RESHAPE_EXPAND: 
+            std::cout<<"\n\nWARNING: This CTensor was expanded in the computational graph, therefore gradients can not be calculated further in this branch\n\n";
+            break;
+        
+        case RESHAPE_REDUCE:
+            break;
+        case RESHAPE_PERMUTE:
+            
+            break;
+        case RESHAPE_TRANSPOSE:
+            if (result != this->a.get()){
+                this->a->backward(prop_grad);
+            }
+            break;
+        default: //should throw exeption
+            break;
+    }
+}
+
+template<typename T>
+requires Scalar<T>
+std::unique_ptr<Function<T>> ReShapeFunction<T>::clone() const{
+    return std::make_unique<ReShapeFunction<T>>(*this);
 }
 
 }//namespace

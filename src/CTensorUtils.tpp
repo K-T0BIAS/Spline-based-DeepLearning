@@ -102,39 +102,7 @@ inline size_t stride(size_t idx, const std::vector<size_t> &shape) {
     return stride;
 }
 
-// Math functions
-/* see readable version below
-template<typename T>
-requires Scalar<T>
-std::vector<T> matmul(const std::vector<T> &A, const std::vector<T> &B, const std::vector<size_t> &A_shape, const std::vector<size_t> &B_shape) {
-    size_t batch_size = 1;
-    if (B_shape.size() != A_shape.size()) {
-        throw std::invalid_argument("A_shape.size() and B_shape.size() must be equal");
-        return std::vector<T>(1, 0);
-    }
-
-    if (A_shape.size() > 2) {
-        for (size_t i = 0; i < A_shape.size() - 2; i++) {
-            batch_size *= A_shape[i];
-        }
-    }
-
-    size_t M = A_shape[A_shape.size() - 2], K = A_shape[A_shape.size() - 1], N = B_shape[B_shape.size() - 1];
-    std::vector<T> result(batch_size * M * N);
-
-    for (size_t batch_dim = 0; batch_dim < batch_size; batch_dim++) {
-        for (size_t row = 0; row < M; row++) {
-            for (size_t col = 0; col < N; col++) {
-                T sum = 0.0;
-                for (size_t shared = 0; shared < K; shared++) {
-                    sum += A[batch_dim * M * K + row * K + shared] * B[batch_dim * K * N + shared * N + col];
-                }
-                result[batch_dim * M * N + row * N + col] = sum;
-            }
-        }
-    }
-    return result;
-}*/
+//math funcs
 
 template<typename T>  // Template function that accepts any scalar type 'T' (e.g., float, double)
 requires Scalar<T>   // This constraint ensures that the type 'T' is a scalar (e.g., not a matrix, vector, etc.)
@@ -198,6 +166,14 @@ std::vector<T> permute_vec(const std::vector<T>& A, const std::vector<size_t>& A
         B[idx] = A[i];
     }
     return B;
+}
+
+inline std::vector<size_t> transpose_shape(const std::vector<size_t>& shape) {
+    std::vector<size_t> temp = shape;
+    size_t n_dims = temp.size();
+    temp[n_dims - 2] = shape[n_dims - 1];
+    temp[n_dims - 1] = shape[n_dims - 2];
+    return temp;
 }
 
 }//namespace

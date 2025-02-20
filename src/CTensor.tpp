@@ -39,6 +39,12 @@ void CTensor<T>::squeeze(const size_t& dim) {
         this->_tensor_data->_shape[dim] *= this->_tensor_data->_shape[dim+1];
         this->_tensor_data->_shape.erase(this->_tensor_data->_shape.begin() + dim + 1);
     }
+    
+    if (this->requires_grad) {
+        auto new_fn = std::make_unique<ReShapeFunction<T>>(std::make_shared<CTensor<T>>(*this), RESHAPE_SQUEEZE);
+        
+        this->_tensor_data->_grad_fn.push_back(std::move(new_fn));
+    }
 }
     
 template<Scalar T>
@@ -49,6 +55,12 @@ void CTensor<T>::unsqueeze(const size_t &dim) {
         (*shape).push_back(1);
     } else {
         (*shape).insert((*shape).begin() + dim, 1);
+    }
+    
+    if (this->requires_grad) {
+        auto new_fn = std::make_unique<ReShapeFunction<T>>(std::make_shared<CTensor<T>>(*this), RESHAPE_UNSQUEEZE);
+        
+        this->_tensor_data->_grad_fn.push_back(std::move(new_fn));
     }
 }
 
@@ -90,9 +102,56 @@ void CTensor<T>::expand(const size_t &dim, const size_t &factor) {
         idx += data_size_per_expansion;
     }
     
-    // Update the shape and number of dimensions
+    auto new_shape = (*shape);
+    new_shape[dim] *= factor;
+    
+        //create new addfunction with shared ptr to this and other
+    auto new_fn = std::make_unique<ReShapeFunction<T>>(std::make_shared<CTensor<T>>(*this), RESHAPE_EXPAND);
+    
+        // Update the shape and number of dimensions
     (*shape)[dim] *= factor;
+    
+    this->_tensor_data->_grad_fn.push_back(std::move(new_fn));
 
+}
+
+template <Scalar T>
+void CTensor<T>::reduce(const size_t &dim, const size_t &factor) {
+    if (factor <= 1) {
+        return; // No reduction needed
+    }
+
+    auto* shape = &(this->_tensor_data->_shape); // Pointer to shape vector
+    auto* data = &(this->_tensor_data->_data);
+    size_t n_dims = shape->size();
+
+    // Ensure valid dimension
+    if (dim >= n_dims) {
+        throw std::invalid_argument("Input dim: " + std::to_string(dim) + 
+                                    " cannot be larger than _n_dims: " + std::to_string(n_dims));
+    }
+
+    // Ensure the shape is divisible by factor
+    if ((*shape)[dim] % factor != 0) {
+        return;
+    }
+
+    // Calculate the size of sub-vectors
+    size_t sub_vector_size = 1;
+    for (size_t i = dim + 1; i < n_dims; i++) {
+        sub_vector_size *= (*shape)[i];
+    }
+
+    size_t idx = 0;
+    while (idx < data->size()) {
+        // Remove (factor - 1) repetitions of the sub-vector
+        for (size_t i = 1; i < factor; i++) {
+            data->erase(data->begin() + idx, data->begin() + idx + sub_vector_size);
+        }
+        idx += sub_vector_size;  // Move to the next section after all removals
+    }
+
+    (*shape)[dim] /= factor;
 }
 
 template<Scalar T>
@@ -250,7 +309,7 @@ void CTensor<T>::clear_graph() {
 //can be improved with overload if no arg is passe to use {} so that this function below can use refernces
 template<Scalar T>
 void CTensor<T>::backward(std::vector<T> prop_grad) {
-    
+    /*
     //go through all parent Functions
     for (auto &fn : this->_tensor_data->_grad_fn) {
         if (fn) {
@@ -263,6 +322,13 @@ void CTensor<T>::backward(std::vector<T> prop_grad) {
         }
     }
     //std::cout<<"debug Ct bwd fn all bwd finish\n";
+    */
+    //testing with revers as this makes more sense fir the tree traversal
+    for (int i = this->_tensor_data->_grad_fn.size() - 1; i >= 0; i--){
+        if (this->_tensor_data->_grad_fn[i]){
+            this->_tensor_data->_grad_fn[i]->backward(prop_grad, this);
+        }
+    }
 }
 
 template<Scalar T>

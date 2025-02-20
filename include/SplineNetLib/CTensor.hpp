@@ -120,6 +120,8 @@ public:
     void permute(const std::vector<size_t> &permutation_indecies) ; //will swap dimesnions at the permutation indecies 
                                                                     //shape (2,3,4) permute(2,0,1) becomes: (4,2,3) 
     
+    void reduce(const size_t &dim, const size_t &factor) ; 
+    
     void transpose() ;
     
     //-----auto_grad-----

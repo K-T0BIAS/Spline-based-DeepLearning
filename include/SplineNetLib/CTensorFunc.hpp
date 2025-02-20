@@ -16,6 +16,16 @@
 #include "CTensorUtils.hpp"
 
 namespace SplineNetLib {
+    
+typedef enum {
+    RESHAPE_SQUEEZE = 1,
+    RESHAPE_UNSQUEEZE  = 2,
+    RESHAPE_EXPAND = 3,
+    RESHAPE_REDUCE = 4,
+    RESHAPE_PERMUTE = 5,
+    RESHAPE_TRANSPOSE = 6
+} ReshapeType;
+
 
 template<Scalar T>
 class CTensor;
@@ -28,8 +38,12 @@ public:
     //pointers to this functions "parents" (like : a operator b)
     std::shared_ptr<CTensor<T>> a;
     std::shared_ptr<CTensor<T>> b;
+    std::vector<size_t> a_shape;
+    std::vector<size_t> b_shape;
     
-    Function(std::shared_ptr<CTensor<T>> A, std::shared_ptr<CTensor<T>> B) : a(A), b(B) {}
+    Function(std::shared_ptr<CTensor<T>> A, std::shared_ptr<CTensor<T>> B) : a(A), b(B), 
+               /*nullptr check for A and B to ensure no segfaults happen ->*/a_shape(A ? A->shape() : std::vector<size_t> {1}), 
+                                                                             b_shape(B ? B->shape() : std::vector<size_t> {1}) {}
     
     //virtual desctructor
     virtual ~Function() = default;
@@ -90,6 +104,27 @@ public:
 
     //construct base class
     MatMulFunction(std::shared_ptr<CTensor<T>> a, std::shared_ptr<CTensor<T>> b) : Function<T>(a, b) {}
+    
+    std::vector<T> fwd() override;
+    
+    void backward(std::vector<T> &prop_grad, CTensor<T> *result) override;
+    
+    virtual std::unique_ptr<Function<T>> clone() const override;
+};
+
+template<typename T>
+requires Scalar<T>
+class ReShapeFunction : public Function<T> {
+public :
+    
+    ReshapeType operation;
+    /*
+    std::vector<size_t> original_shape;
+    std::vector<size_t> new_shape;
+    */
+    
+    ReShapeFunction(std::shared_ptr<CTensor<T>> a, ReshapeType _operation) : 
+    Function<T>(a, nullptr),operation(_operation){}
     
     std::vector<T> fwd() override;
     

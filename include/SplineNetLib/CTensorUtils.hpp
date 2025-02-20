@@ -26,6 +26,7 @@
 #include <unordered_set>
 
 namespace SplineNetLib {
+    
 
 template <typename T>
 std::string vectorToString(const std::vector<T>& vec);
@@ -87,6 +88,9 @@ std::vector<T> matmul(const std::vector<T> &A, const std::vector<T> &B, const st
 template<typename T>
 requires Scalar<T>
 std::vector<T> permute_vec(const std::vector<T>& A, const std::vector<size_t>& A_shape, const std::vector<size_t>& permutation_indices) ;
+
+//swaps last two dimensions as if transposing a ctensor
+std::vector<size_t> transpose_shape(const std::vector<size_t>& shape) ;
 
 } //namespace
 

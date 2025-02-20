@@ -70,6 +70,33 @@ auto new_CTensor = first_CTensor.clone();
 
 this will create a deep copy of "first_CTensor"
 
+### CTensor getter functions
+
+#### data()
+
+this returns the inner data vector from the CTensor **Note** that this data vector is the flat representation of the CTensor.
+
+example:
+
+```cpp
+auto CTensor_instance = SplineNetLib::CTensor({1,2,3,4,5,6},{2,3});
+auto data = CTensor_instance.data();
+```
+
+here data will be a vector<T> like {1,2,3,4,5,6}, where 'T' is the datatype of CTensor_instance.
+
+#### shape()
+
+this returns the shape of the CTensor
+
+example:
+```cpp
+auto CTensor_instance = SplineNetLib::CTensor({1,2,3,4,5,6},{2,3});
+auto data = CTensor_instance.shape();
+```
+
+this returns a vector<size_t> = {2,3}.
+
 ### CTensor shape related functions
 
 #### squeeze
@@ -128,6 +155,45 @@ the shape (1,3) becomes (3,3) and the data
 ((1,2,3),  
  (1,2,3),  
  (1,2,3))
+
+#### permute 
+
+swaps around dimension sizes 
+
+syntax:
+
+syntax:
+```cpp
+Ctensor.permute(index_vector);
+```
+example:
+```cpp
+auto CTensor_instance = SplineNetLib::CTensor({1,2,1,2,1,2,1,2},{1,4,2});
+std::vector<size_t> index_vector = {0,2,1};
+```
+
+the shape (1,4,2) will become (1,2,4). **Note** that this will not change the actual data vector as the permutation only affects the projection logic, meaning that when indexing a permutated CTensor the result will be different to before the permutation although the underlaying data is the same.
+
+#### transpose
+
+this transposes the CTensor meaning it swaps the inner most two dimensions (including the data in the flat vector)
+
+syntax:
+
+```cpp
+Ctensor.transpose();
+```
+
+example: 
+
+```cpp
+auto CTensor_instance = SplineNetLib::CTensor({1.0,2.0,3.0,4.0,5.0,6.0}, {2,3});
+
+CTensor_instance.transpose();
+```
+
+this will swap dim0 and dim1, so shape (2,3) becomes (3,2). The data vector [1.0, 2.0, 3.0, 4.0, 5.0, 6.0] will change to [1.0, 4.0, 2.0, 5.0, 3.0, 6.0] to fit the new shape.
+
 
 
 **more coming soon**
