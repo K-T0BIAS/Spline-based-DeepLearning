@@ -31,4 +31,4 @@ jobs:
 
       - name: Run Python unit tests
         run: |
-          python ../tests/unit_tests/py_spline_tests.py
+          python tests/unit_tests/py_spline_tests.py
