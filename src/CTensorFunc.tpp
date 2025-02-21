@@ -209,6 +209,8 @@ std::vector<T> MatMulFunction<T>::fwd() {
     
     auto a_copy = this->a->clone();
     auto b_copy = this->b->clone();
+    a_copy->requires_grad = false;
+    b_copy->requires_grad = false;
         
     if (a_n_dims != b_n_dims) {
         throw std::invalid_argument("operator (*) expects both opperants to have the same num of dimensions but got:"+std::to_string(a_n_dims)+"and "+std::to_string(b_n_dims)+",please ensure opperants dims match by using squeeze or unsqueeze beforehand\n");
@@ -270,8 +272,9 @@ void MatMulFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result) 
                     //create a copy of b and transpose it
             auto b_copy = this->b->clone();
             b_copy.transpose();
+            std::cout<<vectorToString(this->b_shape)<<"b shape\n";
             auto b_shape = transpose_shape(this->b_shape);
-            
+            std::cout<<vectorToString(b_shape)<<"b shape\n";
             prop_grad_a = matmul(prop_grad, b_copy.data(), prop_grad_shape, b_shape);
             
             //assign grad

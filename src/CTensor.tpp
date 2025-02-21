@@ -162,10 +162,9 @@ void CTensor<T>::reduce(const size_t &dim, const size_t &factor) {
 
 template<Scalar T>
 void CTensor<T>::permute(const std::vector<size_t> &permutation_indecies) {
-    /*
     //renamed global func permute to permute_vec so that func czll in class is nolonger ::permute now permute_vec
     this->_tensor_data->_data = permute_vec(this->_tensor_data->_data, this->_tensor_data->_shape, permutation_indecies); 
-    */  
+        
     auto shape_copy = this->shape();
     for (size_t i = 0; i < permutation_indecies.size(); i++) {
         this->_tensor_data->_shape[i] = shape_copy[permutation_indecies[i]];
