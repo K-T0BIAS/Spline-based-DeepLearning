@@ -346,7 +346,9 @@ void ReShapeFunction<T>::backward(std::vector<T> &prop_grad, CTensor<T> *result)
             std::cout<<"\n\nWARNING: This CTensor was reduced in the computational graph, therefore gradients can not be calculated further in this branch\n\n";
             break;
         case RESHAPE_PERMUTE:
-            std::cout<<"\n\nWARNING: This CTensor was permuted in the computational graph, therefore gradients can not be calculated further in this branch\n\n";
+            if (result != this->a.get()){
+                this->a->backward(prop_grad);
+            }
             break;
         case RESHAPE_TRANSPOSE:
             if (result != this->a.get()){
