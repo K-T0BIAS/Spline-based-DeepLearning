@@ -209,8 +209,8 @@ std::vector<T> MatMulFunction<T>::fwd() {
     
     auto a_copy = this->a->clone();
     auto b_copy = this->b->clone();
-    a_copy->requires_grad = false;
-    b_copy->requires_grad = false;
+    a_copy.requires_grad = false;
+    b_copy.requires_grad = false;
         
     if (a_n_dims != b_n_dims) {
         throw std::invalid_argument("operator (*) expects both opperants to have the same num of dimensions but got:"+std::to_string(a_n_dims)+"and "+std::to_string(b_n_dims)+",please ensure opperants dims match by using squeeze or unsqueeze beforehand\n");
