@@ -173,7 +173,7 @@ double spline::backward(double x, double d_y, double y) {
 void spline::apply_grad(double lr) {
     for (size_t i = 0; i < grad.size(); i++ ) {
         if (grad[i] != 0.0) {
-            points[i][1] = points[i][1]+lr*grad[i]; //Adjust y_i based on error grad
+            points[i][1] = points[i][1]-lr*grad[i]; //Adjust y_i based on error grad
             grad[i] = 0.0; //reset grad for next bwd 
         }
     }
