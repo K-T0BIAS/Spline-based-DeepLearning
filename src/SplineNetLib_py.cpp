@@ -74,7 +74,7 @@ PYBIND11_MODULE(PySplineNetLib, m) {
         .def("apply_grad",&SplineNetLib::spline::apply_grad,"None (double lr),apply grad from backward * lr")
         .def("get_points",&SplineNetLib::spline::get_points,"[[double]] (None),return spline points like [[x0,y0],...,[xn,yn]]")
         .def("get_params",&SplineNetLib::spline::get_params,"[[double]] (None),return spline parameters/coefficients like [[a0,b0,c0,d0],...,[an,bn,cn,dn]]");
-        
+
     py::class_<SplineNetLib::layer>(m, "layer")
         .def(py::init<unsigned int, unsigned int, unsigned int, double>())//in size, out size, detail (num of parameters -2), max (maximum input value that spline processes)
         .def(py::init<std::vector<std::vector<std::vector<std::vector<double>>>>, std::vector<std::vector<std::vector<std::vector<double>>>> >())
@@ -84,6 +84,7 @@ PYBIND11_MODULE(PySplineNetLib, m) {
         .def("backward",py::overload_cast<std::vector<double>,std::vector<double> , bool>(&SplineNetLib::layer::backward),"[double] ([double] x,[double]d_y,bool normalize), takes input x, loss gradient d_y and bool apply_grad,returns propageted loss (applies grad to all splines if True)")
         .def("backward",py::overload_cast<const std::vector<std::vector<double>> &,std::vector<std::vector<double>> >(&SplineNetLib::layer::backward),"backward but for batches (will always apply gradients)")
         .def("get_splines",&SplineNetLib::layer::get_splines,"[[SplineNetLib::spline]] (None), returns all splines in the layer");
+        .def_readwrite("lr", &SplineNetLib::layer::lr)
     //int tensor
     py::class_<SplineNetLib::CTensor<int>>(m, "IntCTensor")
 
