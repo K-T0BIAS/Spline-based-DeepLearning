@@ -1,4 +1,4 @@
-#Due to a personal lack of time and resources, work on this project was stopped. Please be aware that some features may still be incomplete or faulty. Should questions arise please feel free to contact me at any time.
+# Due to a personal lack of time and resources, work on this project was stopped. Please be aware that some features may still be incomplete or faulty. Should questions arise please feel free to contact me at any time.
 
 # About Spline-based-DeepLearning
 
