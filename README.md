@@ -1,3 +1,7 @@
+# Please note that the project is unfinished and may include bugs (especially in the tensor lib). Due to a lack of time and resources work on this has been stopped. 
+
+If there are any questions about the project feel free to contact me. My email address is linked in my profile.
+
 # About Spline-based-DeepLearning
 
 ## bugs
